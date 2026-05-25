@@ -1,0 +1,101 @@
+aid: pulsemcp
+name: PulseMCP
+description: >-
+  PulseMCP is a community platform and directory dedicated to the Model
+  Context Protocol (MCP) — the open protocol for connecting AI assistants
+  and agents to external tools, data, and systems. Founded by Tadas
+  Antanavicius (MCP Steering Committee) and Mike Coughlin in early 2025,
+  PulseMCP curates searchable directories of MCP servers and clients,
+  publishes use cases, runs the "Agentic Loop" newsletter, and operates a
+  Discord community for builders. It also exposes a public PulseMCP
+  Registry API (api.pulsemcp.com, v0.1) implementing the Generic MCP
+  Registry API specification with PulseMCP-specific enriched metadata such
+  as popularity, security analyses, and compatibility data. The PulseMCP
+  GitHub organization additionally maintains MCP servers, the AIR
+  collaboration framework, and shared agentic-engineering templates and
+  artifacts. Access to the API requires contacting PulseMCP for a key and
+  tenant ID; the directory and content are free to browse.
+type: Index
+position: Provider
+access: 3rd-Party
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - MCP
+  - Model Context Protocol
+  - AI Agents
+  - Agentic Engineering
+  - Directory
+  - Registry
+  - Community
+  - Developer Tools
+  - LLM Tooling
+  - Newsletter
+url: https://raw.githubusercontent.com/api-evangelist/pulsemcp/refs/heads/main/apis.yml
+created: '2026-05-25'
+modified: '2026-05-25'
+specificationVersion: '0.20'
+apis:
+  - aid: pulsemcp:registry
+    name: PulseMCP Registry API
+    description: >-
+      Public v0.1 API for browsing MCP servers, server versions, and
+      ecosystem metadata in the PulseMCP Registry. Implements the Generic
+      MCP Registry API specification with PulseMCP enrichments
+      (popularity, security analyses, compatibility). Requires X-API-Key
+      and X-Tenant-ID headers; rate limited to 200 req/min, 5,000 req/hr,
+      10,000 req/day.
+    humanURL: https://www.pulsemcp.com/api/docs/v0.1
+    baseURL: https://api.pulsemcp.com
+    tags:
+      - MCP Registry
+      - Servers
+      - Versions
+    properties:
+      - type: Documentation
+        url: https://www.pulsemcp.com/api/docs/v0.1
+      - type: SignUp
+        url: mailto:hello@pulsemcp.com
+common:
+  - type: Website
+    url: https://www.pulsemcp.com
+  - type: Servers
+    url: https://www.pulsemcp.com/servers
+  - type: Clients
+    url: https://www.pulsemcp.com/clients
+  - type: UseCases
+    url: https://www.pulsemcp.com/use-cases
+  - type: Submit
+    url: https://www.pulsemcp.com/submit
+  - type: SubmitUseCase
+    url: https://www.pulsemcp.com/use-cases/submit
+  - type: Blog
+    url: https://www.pulsemcp.com/posts
+  - type: Newsletter
+    url: https://www.pulsemcp.com/newsletter
+  - type: Statistics
+    url: https://www.pulsemcp.com/stats
+  - type: Documentation
+    url: https://www.pulsemcp.com/api/docs/v0.1
+  - type: WorkWithUs
+    url: https://www.pulsemcp.com/work-with-us
+  - type: TermsOfService
+    url: https://www.pulsemcp.com/terms
+  - type: PrivacyPolicy
+    url: https://www.pulsemcp.com/privacy
+  - type: EditorialDisclosure
+    url: https://www.pulsemcp.com/editorial-disclosure
+  - type: Contact
+    url: mailto:hello@pulsemcp.com
+  - type: GitHub
+    url: https://github.com/pulsemcp
+  - type: Discord
+    url: https://discord.gg/dP2evEyTjS
+  - type: Twitter
+    url: https://x.com/pulsemcp
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/pulsemcp
+  - type: MCPRegistry
+    url: https://github.com/modelcontextprotocol/registry
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
