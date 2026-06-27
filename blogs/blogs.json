@@ -3,16 +3,12 @@
   "feeds": [
     {
       "source": "https://www.pulsemcp.com/posts",
-      "feed_url": "https://www.pulsemcp.com/posts",
-      "title": "",
+      "feed_url": "",
       "saved": 0,
-      "method": "none"
-    },
-    {
-      "source": "https://www.pulsemcp.com/use-cases/submit",
-      "error": "HTTPError"
+      "method": "agent-scrape"
     }
   ],
-  "post_count": 0,
-  "fetched": "2026-06-14T20:42:17Z"
+  "post_count": 1,
+  "fetched": "2026-06-27T13:03:48Z",
+  "agent_pulled": "2026-06-27"
 }
