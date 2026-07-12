@@ -56,6 +56,8 @@ apis:
       - type: Signup
         url: mailto:hello@pulsemcp.com
 common:
+  - type: DomainSecurity
+    url: security/pulsemcp-domain-security.yml
   - type: Website
     url: https://www.pulsemcp.com
   - type: Servers
