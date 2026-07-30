@@ -16,9 +16,20 @@ description: >-
   artifacts. Access to the API requires contacting PulseMCP for a key and
   tenant ID; the directory and content are free to browse.
 type: Index
+accessModel:
+  pricing: unknown
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Unknown
+  confidence: low
+  source: []
+  generated: '2026-07-22'
+  method: derived
 position: Provider
 access: 3rd-Party
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/pulsemcp.png
 tags:
   - MCP
   - Model Context Protocol
