@@ -43,8 +43,13 @@ tags:
   - Newsletter
 url: https://raw.githubusercontent.com/api-evangelist/pulsemcp/refs/heads/main/apis.yml
 created: '2026-05-25'
-modified: '2026-05-25'
+modified: '2026-08-13'
 specificationVersion: '0.20'
+x-enrichment:
+  date: '2026-08-13'
+  status: enriched
+  artifacts_added: 18
+  pass: local-v1
 apis:
   - aid: pulsemcp:registry
     name: PulseMCP Registry API
@@ -64,11 +69,47 @@ apis:
     properties:
       - type: Documentation
         url: https://www.pulsemcp.com/api/docs/v0.1
+      - type: APIReference
+        url: https://www.pulsemcp.com/api/docs/v0.1
+      - type: DeveloperPortal
+        url: https://www.pulsemcp.com/api
       - type: Signup
         url: mailto:hello@pulsemcp.com
+      - type: Authentication
+        url: authentication/pulsemcp-authentication.yml
+      - type: RateLimits
+        url: rate-limits/pulsemcp-rate-limits.yml
+      - type: Plans
+        url: plans/pulsemcp-plans-pricing.yml
+      - type: Conventions
+        url: conventions/pulsemcp-conventions.yml
+      - type: ErrorCatalog
+        url: errors/pulsemcp-problem-types.yml
+      - type: Lifecycle
+        url: lifecycle/pulsemcp-lifecycle.yml
+      - type: DataModel
+        url: data-model/pulsemcp-data-model.yml
 common:
   - type: DomainSecurity
     url: security/pulsemcp-domain-security.yml
+  - type: Packages
+    url: packages/pulsemcp-packages.yml
+  - type: SDKs
+    url: packages/pulsemcp-packages.yml
+  - type: MCPServer
+    url: mcp/pulsemcp-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/pulsemcp-tool-crosswalk.yml
+  - type: AgentSkill
+    url: skills/_index.yml
+  - type: LLMsTxt
+    url: llms/pulsemcp-llms.txt
+  - type: CLI
+    url: cli/pulsemcp-cli.yml
+  - type: ChangeLog
+    url: changelog/pulsemcp-changelog.yml
+  - type: Conformance
+    url: conformance/pulsemcp-conformance.yml
   - type: Website
     url: https://www.pulsemcp.com
   - type: Servers
@@ -92,14 +133,18 @@ common:
   - type: WorkWithUs
     url: https://www.pulsemcp.com/work-with-us
   - type: TermsOfService
-    url: https://www.pulsemcp.com/terms
+    url: https://www.pulsemcp.com/terms-of-service
   - type: PrivacyPolicy
-    url: https://www.pulsemcp.com/privacy
+    url: https://www.pulsemcp.com/privacy-policy
   - type: EditorialDisclosure
     url: https://www.pulsemcp.com/editorial-disclosure
   - type: Contact
     url: mailto:hello@pulsemcp.com
+  - type: Support
+    url: https://discord.gg/dP2evEyTjS
   - type: GitHub
+    url: https://github.com/pulsemcp
+  - type: GitHubOrganization
     url: https://github.com/pulsemcp
   - type: Discord
     url: https://discord.gg/dP2evEyTjS
