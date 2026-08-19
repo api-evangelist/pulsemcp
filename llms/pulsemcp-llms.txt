@@ -1,0 +1,25 @@
+# PulseMCP
+
+> Browse MCP servers, clients, resources, and news; stay updated on the MCP (Model Context Protocol) ecosystem.
+
+PulseMCP helps developers and organizations discover, integrate, and stay updated with the MCP ecosystem through curated directories, documentation, and programmatic access to its data.
+
+## MCP Servers Directory
+
+- [MCP Servers Directory](https://www.pulsemcp.com/servers): Comprehensive, daily-updated directory of MCP servers with search and filtering capabilities
+
+## MCP Clients (AI Apps & Tools) Directory
+
+- [MCP Clients Directory](https://www.pulsemcp.com/clients): Curated collection of AI applications and tools that integrate with MCP servers
+
+## PulseMCP REST API
+
+- [API Documentation](https://www.pulsemcp.com/api): Complete REST API documentation for accessing MCP server data
+
+## Blog
+
+- [Blog](https://www.pulsemcp.com/posts): MCP news, resources, and community updates; The Agentic Loop bi-weekly newsletter, tutorials, and articles
+
+## Use Cases
+
+- [Use Cases](https://www.pulsemcp.com/use-cases): Explore practical use cases of MCP and how it can be used in your work and life

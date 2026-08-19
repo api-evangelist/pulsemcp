@@ -1,0 +1,476 @@
+generated: '2026-08-13'
+method: searched
+status: published
+source: >-
+  https://github.com/pulsemcp/mcp-servers — 32 first-party MCP server manifests
+  (server.json, MCP registry schema 2025-09-29), each read verbatim on 2026-08-13,
+  cross-checked against registry.npmjs.org for published version and date.
+description: >-
+  PulseMCP authors and maintains 32 MCP servers — 4 "productionized" under the
+  @pulsemcp/ npm scope and 28 "experimental" under unscoped npm names. EVERY ONE OF
+  THEM IS A LOCAL STDIO SERVER distributed as an npm package. PulseMCP operates NO
+  hosted/remote MCP endpoint of its own: there is no mcp.pulsemcp.com, and
+  https://api.pulsemcp.com/mcp returns the API's JSON 404 (invalid_path). An agent
+  cannot reach PulseMCP over MCP without a human first installing a package on a
+  machine.
+
+  The one server that fronts PulseMCP's OWN product is
+  @pulsemcp/pulse-subregistry, an stdio wrapper over the PulseMCP Registry API at
+  https://api.pulsemcp.com/v0.1. Its three tools are bound to the REST surface in
+  mcp/pulsemcp-tool-crosswalk.yml. The other 31 servers wrap third-party products
+  (Gmail, Slack, Vercel, 1Password, Fly.io, AWS, …) and are first-party PulseMCP
+  code but not a PulseMCP API surface.
+
+deployment:
+  mode: local-stdio
+  install: npx -y @pulsemcp/pulse-subregistry
+  package: https://www.npmjs.com/package/@pulsemcp/pulse-subregistry
+  auth: api-key
+  verified: searched
+  note: >-
+    mode is local-stdio for all 32 servers: every server.json declares
+    transport.type "stdio" with runtimeHint "npx". `install` and `package` above
+    name the server that reaches PulseMCP's own data; the full roster is in
+    servers[] below. auth: api-key because pulse-subregistry requires
+    PULSEMCP_SUBREGISTRY_API_KEY (sent as X-API-Key) and optionally
+    PULSEMCP_SUBREGISTRY_TENANT_ID (sent as X-Tenant-ID); keys are issued only by
+    emailing hello@pulsemcp.com.
+
+remote_endpoint_probes:
+  - url: https://api.pulsemcp.com/mcp
+    status: 404
+    note: JSON invalid_path error from the API host — no MCP endpoint served.
+  - url: https://mcp.pulsemcp.com
+    status: null
+    note: >-
+      No such host is documented or advertised anywhere in PulseMCP's docs, GitHub
+      org, or llms.txt; not probed as a guessed URL.
+
+primary_server:
+  name: com.pulsemcp/pulse-subregistry
+  package: '@pulsemcp/pulse-subregistry'
+  version: '0.0.8'
+  published: '2026-06-14'
+  transport: stdio
+  install: npx -y @pulsemcp/pulse-subregistry
+  source: https://github.com/pulsemcp/mcp-servers/tree/main/productionized/pulse-subregistry
+  backing_api: https://api.pulsemcp.com/v0.1
+  environment:
+    - name: PULSEMCP_SUBREGISTRY_API_KEY
+      required: true
+      secret: true
+      description: PulseMCP API key for authentication (sent as the X-API-Key header).
+    - name: PULSEMCP_SUBREGISTRY_TENANT_ID
+      required: false
+      description: Tenant identifier for multi-tenant use (sent as the X-Tenant-ID header).
+    - name: SHOW_ADMIN_TOOLS
+      required: false
+      default: 'false'
+      description: Enable admin tools including switch_tenant_id.
+  tools:
+    - name: list_servers
+      description: >-
+        Browse MCP servers from the PulseMCP Sub-Registry. Returns a paginated list
+        of active and deprecated servers with their names, descriptions, and
+        metadata. Deleted servers are excluded by default. Use search to filter by
+        name or description. Use cursor for pagination through large result sets.
+      inputSchema_params: [limit, cursor, search, updated_since, latest_only, expand_fields]
+    - name: get_server
+      description: >-
+        Get detailed information about a specific MCP server from the PulseMCP
+        Sub-Registry. Returns the server's metadata, description, repository URL,
+        and other available information for active and deprecated servers. Use
+        "latest" version (default) or specify a specific version number.
+      inputSchema_params: [server_name, version, expand_fields]
+    - name: switch_tenant_id
+      description: >-
+        Switch the active tenant ID used for all subsequent API requests. This is an
+        admin tool for multi-tenant scenarios. Pass an empty string to clear the
+        tenant ID.
+      inputSchema_params: [tenant_id]
+      gated_by: SHOW_ADMIN_TOOLS=true
+  tools_source: >-
+    Read verbatim from the server's own source
+    (productionized/pulse-subregistry/shared/src/tools/*.ts) — a live tools/list
+    could not be captured because the server is stdio-only and requires an API key
+    PulseMCP issues by email.
+
+other_productionized_tools:
+  - server: com.pulsemcp/pulse-fetch
+    tools:
+      - name: scrape
+        description: >-
+          Scrape webpage content using intelligent automatic strategy selection with
+          built-in caching. Fetches content from any URL with flexible result
+          handling options.
+  - server: com.pulsemcp/image-diff
+    tools:
+      - name: get_diff_of_images
+        description: Compare two images pixel-by-pixel and identify visual differences.
+  - server: com.pulsemcp/svg-tracer
+    tools:
+      - name: trace_bitmap_to_svg
+        description: Convert a bitmap image to SVG vector graphics using potrace tracing.
+
+servers:
+  - name: com.pulsemcp/image-diff
+    tier: productionized
+    package: "@pulsemcp/image-diff-mcp-server"
+    transport: stdio
+    install: npx -y @pulsemcp/image-diff-mcp-server
+    manifest_version: '0.1.3'
+    npm_version: '0.1.3'
+    npm_published: '2026-06-14'
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/productionized/image-diff
+    description: >-
+      MCP server for programmatic image comparison and visual diff generation.
+  - name: com.pulsemcp/pulse-fetch
+    tier: productionized
+    package: "@pulsemcp/pulse-fetch"
+    transport: stdio
+    install: npx -y @pulsemcp/pulse-fetch
+    manifest_version: '0.3.3'
+    npm_version: '0.3.3'
+    npm_published: '2026-06-14'
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/productionized/pulse-fetch
+    description: >-
+      MCP server for fetching web resources with content extraction and anti-bot bypass.
+  - name: com.pulsemcp/pulse-subregistry
+    tier: productionized
+    package: "@pulsemcp/pulse-subregistry"
+    transport: stdio
+    install: npx -y @pulsemcp/pulse-subregistry
+    manifest_version: '0.0.8'
+    npm_version: '0.0.8'
+    npm_published: '2026-06-14'
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/productionized/pulse-subregistry
+    description: >-
+      MCP server providing access to the PulseMCP Sub-Registry for browsing and discovering MCP servers.
+  - name: com.pulsemcp/svg-tracer
+    tier: productionized
+    package: "@pulsemcp/svg-tracer-mcp-server"
+    transport: stdio
+    install: npx -y @pulsemcp/svg-tracer-mcp-server
+    manifest_version: '0.1.3'
+    npm_version: '0.1.3'
+    npm_published: '2026-06-14'
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/productionized/svg-tracer
+    description: >-
+      MCP server for converting bitmap images to SVG vector graphics using potrace tracing.
+  - name: com.pulsemcp/agent-orchestrator
+    tier: experimental
+    package: "agent-orchestrator-mcp-server"
+    transport: stdio
+    install: npx -y agent-orchestrator-mcp-server
+    manifest_version: '0.8.11'
+    npm_version: '0.8.11'
+    npm_published: '2026-07-06'
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/agent-orchestrator
+    description: >-
+      MCP server for PulseMCP's Agent Orchestrator — manage agent sessions, notifications, and triggers.
+  - name: com.pulsemcp/appsignal
+    tier: experimental
+    package: "appsignal-mcp-server"
+    transport: stdio
+    install: npx -y appsignal-mcp-server
+    manifest_version: '0.5.4'
+    npm_version: '0.5.4'
+    npm_published: '2026-06-14'
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/appsignal
+    description: >-
+      MCP server for AppSignal — get alert details, search logs, and retrieve logs within time ranges.
+  - name: com.pulsemcp/claude-code-agent
+    tier: experimental
+    package: "claude-code-agent-mcp-server"
+    transport: stdio
+    install: npx -y claude-code-agent-mcp-server
+    manifest_version: '0.0.8'
+    npm_version: '0.0.8'
+    npm_published: '2026-06-14'
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/claude-code-agent
+    description: >-
+      Claude Code Agent MCP Server - enables agentic MCP configuration to solve tool overload
+  - name: com.pulsemcp/dynamodb
+    tier: experimental
+    package: "aws-dynamodb-mcp-server"
+    transport: stdio
+    install: npx -y aws-dynamodb-mcp-server
+    manifest_version: '0.2.7'
+    npm_version: '0.2.7'
+    npm_published: '2026-06-14'
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/dynamodb
+    description: >-
+      MCP server for AWS DynamoDB with fine-grained tool control and configurable access levels.
+  - name: com.pulsemcp/fetchpet
+    tier: experimental
+    package: "fetchpet-mcp-server"
+    transport: stdio
+    install: npx -y fetchpet-mcp-server
+    manifest_version: '0.1.8'
+    npm_version: '0.1.8'
+    npm_published: '2026-06-14'
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/fetchpet
+    description: >-
+      MCP server for Fetch Pet insurance claims management using Playwright automation.
+  - name: com.pulsemcp/fly-io
+    tier: experimental
+    package: "fly-io-mcp-server"
+    transport: stdio
+    install: npx -y fly-io-mcp-server
+    manifest_version: '0.1.7'
+    npm_version: '0.1.7'
+    npm_published: '2026-06-14'
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/fly-io
+    description: >-
+      MCP server for managing Fly.io machines, apps, logs, and Docker images.
+  - name: com.pulsemcp/gcs
+    tier: experimental
+    package: "gcs-google-mcp-server"
+    transport: stdio
+    install: npx -y gcs-google-mcp-server
+    manifest_version: '0.1.14'
+    npm_version: '0.1.14'
+    npm_published: '2026-06-14'
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/gcs
+    description: >-
+      MCP server for Google Cloud Storage with fine-grained tool access control.
+  - name: com.pulsemcp/gmail
+    tier: experimental
+    package: "gmail-workspace-mcp-server"
+    transport: stdio
+    install: npx -y gmail-workspace-mcp-server
+    manifest_version: '0.4.12'
+    npm_version: '0.4.12'
+    npm_published: '2026-07-10'
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/gmail
+    description: >-
+      MCP server for Gmail with OAuth2 (personal) and service account (Workspace) support.
+  - name: com.pulsemcp/good-eggs
+    tier: experimental
+    package: "good-eggs-mcp-server"
+    transport: stdio
+    install: npx -y good-eggs-mcp-server
+    manifest_version: '0.1.11'
+    npm_version: '0.1.11'
+    npm_published: '2026-06-30'
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/good-eggs
+    description: >-
+      MCP server for Good Eggs grocery shopping automation using Playwright.
+  - name: com.pulsemcp/google-calendar
+    tier: experimental
+    package: "google-calendar-workspace-mcp-server"
+    transport: stdio
+    install: npx -y google-calendar-workspace-mcp-server
+    manifest_version: '0.0.13'
+    npm_version: '0.0.13'
+    npm_published: '2026-06-14'
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/google-calendar
+    description: >-
+      MCP server for Google Calendar integration with service account support and domain-wide delegation.
+  - name: com.pulsemcp/google-docs
+    tier: experimental
+    package: "google-docs-workspace-mcp-server"
+    transport: stdio
+    install: npx -y google-docs-workspace-mcp-server
+    manifest_version: '0.1.4'
+    npm_version: '0.1.4'
+    npm_published: '2026-06-14'
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/google-docs
+    description: >-
+      MCP server for Google Docs integration with OAuth2 and service account support.
+  - name: com.pulsemcp/google-flights
+    tier: experimental
+    package: "google-flights-mcp-server"
+    transport: stdio
+    install: npx -y google-flights-mcp-server
+    manifest_version: '0.2.6'
+    npm_version: '0.2.6'
+    npm_published: '2026-06-26'
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/google-flights
+    description: >-
+      MCP server for searching Google Flights — flight search, date grid pricing, and airport lookup.
+  - name: com.pulsemcp/hatchbox
+    tier: experimental
+    package: "hatchbox-mcp-server"
+    transport: stdio
+    install: npx -y hatchbox-mcp-server
+    manifest_version: '0.1.3'
+    npm_version: '0.1.3'
+    npm_published: '2026-06-14'
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/hatchbox
+    description: >-
+      MCP server for Hatchbox Rails hosting — env var inspection, deploys, and process monitoring.
+  - name: com.pulsemcp/langfuse
+    tier: experimental
+    package: "langfuse-observability-mcp-server"
+    transport: stdio
+    install: npx -y langfuse-observability-mcp-server
+    manifest_version: '0.1.3'
+    npm_version: '0.1.3'
+    npm_published: '2026-06-14'
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/langfuse
+    description: >-
+      MCP server for Langfuse LLM observability — trace and observation analysis.
+  - name: com.pulsemcp/monarch-money
+    tier: experimental
+    package: "monarch-money-mcp-server"
+    transport: stdio
+    install: npx -y monarch-money-mcp-server
+    manifest_version: '0.0.13'
+    npm_version: '0.0.13'
+    npm_published: '2026-07-06'
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/monarch-money
+    description: >-
+      MCP server for Monarch Money — account, transaction, and budget management.
+  - name: com.pulsemcp/onepassword
+    tier: experimental
+    package: "onepassword-mcp-server"
+    transport: stdio
+    install: npx -y onepassword-mcp-server
+    manifest_version: '0.5.4'
+    npm_version: '0.5.4'
+    npm_published: '2026-06-14'
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/onepassword
+    description: >-
+      MCP server for interacting with 1Password via the CLI to read and manage credentials.
+  - name: com.pulsemcp/playwright-stealth
+    tier: experimental
+    package: "playwright-stealth-mcp-server"
+    transport: stdio
+    install: npx -y playwright-stealth-mcp-server
+    manifest_version: '0.2.3'
+    npm_version: '0.2.3'
+    npm_published: '2026-06-14'
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/playwright-stealth
+    description: >-
+      Browser automation using Playwright with optional stealth mode to bypass anti-bot protection.
+  - name: com.pulsemcp/pointsyeah
+    tier: experimental
+    package: "pointsyeah-mcp-server"
+    transport: stdio
+    install: npx -y pointsyeah-mcp-server
+    manifest_version: '0.2.9'
+    npm_version: '0.2.9'
+    npm_published: '2026-06-14'
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/pointsyeah
+    description: >-
+      MCP server for searching award flights and travel deals via PointsYeah.
+  - name: com.pulsemcp/proctor
+    tier: experimental
+    package: "proctor-mcp-server"
+    transport: stdio
+    install: npx -y proctor-mcp-server
+    manifest_version: '0.1.9'
+    npm_version: '0.1.9'
+    npm_published: '2026-06-14'
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/proctor
+    description: >-
+      MCP server for running Proctor exams against MCP servers with exam execution and result management.
+  - name: com.pulsemcp/pulsemcp-cms-admin
+    tier: experimental
+    package: "pulsemcp-cms-admin-mcp-server"
+    transport: stdio
+    install: npx -y pulsemcp-cms-admin-mcp-server
+    manifest_version: '0.10.6'
+    npm_version: '0.10.6'
+    npm_published: '2026-06-30'
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/pulsemcp-cms-admin
+    description: >-
+      MCP server for managing PulseMCP's CMS — newsletter and MCP server directory.
+  - name: com.pulsemcp/remote-filesystem
+    tier: experimental
+    package: "remote-filesystem-mcp-server"
+    transport: stdio
+    install: npx -y remote-filesystem-mcp-server
+    manifest_version: '0.1.5'
+    npm_version: '0.1.5'
+    npm_published: '2026-06-22'
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/remote-filesystem
+    description: >-
+      MCP server for remote filesystem operations on cloud storage (Google Cloud Storage).
+  - name: com.pulsemcp/s3
+    tier: experimental
+    package: "s3-aws-mcp-server"
+    transport: stdio
+    install: npx -y s3-aws-mcp-server
+    manifest_version: '0.0.5'
+    npm_version: '0.0.5'
+    npm_published: '2026-06-14'
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/s3
+    description: >-
+      MCP server for AWS S3 with fine-grained tool control and S3-compatible endpoint support.
+  - name: com.pulsemcp/serpapi-hotels
+    tier: experimental
+    package: "serpapi-hotels-mcp-server"
+    transport: stdio
+    install: npx -y serpapi-hotels-mcp-server
+    manifest_version: '0.0.4'
+    npm_version: '0.0.4'
+    npm_published: '2026-06-14'
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/serpapi-hotels
+    description: >-
+      MCP server for searching Google Hotels via SerpAPI — hotel search, pricing, ratings, and reviews.
+  - name: com.pulsemcp/slack
+    tier: experimental
+    package: "slack-workspace-mcp-server"
+    transport: stdio
+    install: npx -y slack-workspace-mcp-server
+    manifest_version: '0.0.7'
+    npm_version: '0.0.7'
+    npm_published: '2026-06-14'
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/slack
+    description: >-
+      MCP server for Slack — read/write messages, manage threads, and react to messages.
+  - name: com.pulsemcp/ssh
+    tier: experimental
+    package: "ssh-agent-mcp-server"
+    transport: stdio
+    install: npx -y ssh-agent-mcp-server
+    manifest_version: '0.1.5'
+    npm_version: '0.1.5'
+    npm_published: '2026-06-14'
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/ssh
+    description: >-
+      MCP server for SSH remote server management with SSH agent authentication support.
+  - name: com.pulsemcp/tailscale
+    tier: experimental
+    package: "tailscale-vpn-mcp-server"
+    transport: stdio
+    install: npx -y tailscale-vpn-mcp-server
+    manifest_version: '0.0.3'
+    npm_version: '0.0.3'
+    npm_published: '2026-07-09'
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/tailscale
+    description: >-
+      MCP server for administering a Tailscale tailnet: read-only introspection plus autonomous policy-file (ACL), device, and auth-key management.
+  - name: com.pulsemcp/twist
+    tier: experimental
+    package: "twist-mcp-server"
+    transport: stdio
+    install: npx -y twist-mcp-server
+    manifest_version: '0.2.3'
+    npm_version: '0.2.3'
+    npm_published: '2026-06-14'
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/twist
+    description: >-
+      MCP server for Twist team messaging — manage channels, threads, and messages.
+  - name: com.pulsemcp/vercel
+    tier: experimental
+    package: "vercel-platform-mcp-server"
+    transport: stdio
+    install: npx -y vercel-platform-mcp-server
+    manifest_version: '0.1.3'
+    npm_version: '0.1.3'
+    npm_published: '2026-06-14'
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/vercel
+    description: >-
+      MCP server for Vercel — manage deployments and view build and runtime application logs.
+
+coverage:
+  servers_total: 32
+  productionized: 4
+  experimental: 28
+  remote_endpoints: 0
+  stdio_packages: 32
+  wrapping_pulsemcp_own_api: 1
+

@@ -1,0 +1,83 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://www.pulsemcp.com/api/docs/v0.1 (authentication section), corroborated by
+  live 401 responses from https://api.pulsemcp.com/v0.1/servers and
+  /v0.1/health, and by the first-party client at
+  https://github.com/pulsemcp/mcp-servers/blob/main/productionized/pulse-subregistry/shared/src/client.ts
+description: >-
+  The PulseMCP Registry API is protected by a single API-key scheme carried in a
+  custom request header, plus a second custom header that selects the tenant.
+  There is no OAuth, no OIDC, no mTLS, and no self-service key issuance: keys are
+  granted only by emailing hello@pulsemcp.com, which makes this a sales-gated API
+  with a fully public reference.
+base_url: https://api.pulsemcp.com
+docs: https://www.pulsemcp.com/api/docs/v0.1
+derived_from_openapi: false
+openapi_present: false
+
+schemes:
+  - id: apiKeyHeader
+    type: apiKey
+    in: header
+    name: X-API-Key
+    required: true
+    applies_to: every path, including the utility endpoints /v0.1/health, /v0.1/ping and /v0.1/version
+    description: >-
+      "Your PulseMCP API key". Sent on every request. A missing or invalid key
+      returns HTTP 401 with body
+      {"error":"Invalid or missing API key","code":"unauthorized","details":{"header":"X-API-Key"}} —
+      observed live on 2026-08-13.
+    key_format: not published
+    rotation_policy: not published
+  - id: tenantHeader
+    type: apiKey
+    in: header
+    name: X-Tenant-ID
+    required: conditional
+    applies_to: >-
+      All data endpoints (/v0.1/servers and below). Documented as optional only for
+      the utility endpoints (health, ping, version).
+    description: >-
+      "Your tenant identifier". Selects which curated sub-registry view the key
+      reads. The MCP server validates it against /^[a-zA-Z0-9_-]*$/ with a 256
+      character maximum, and can switch it at runtime via its switch_tenant_id
+      admin tool.
+
+oauth2: false
+openid_connect: false
+mutual_tls: false
+basic_auth: false
+bearer_token: false
+
+key_acquisition:
+  self_service: false
+  signup_url: null
+  process: >-
+    Email hello@pulsemcp.com. The /api page states PulseMCP is "working directly
+    with partners to provide an enriched, curated, quality-controlled MCP server
+    registry offering customized to the needs of the partner business" — there is
+    no signup form, no developer dashboard, and no free tier documented.
+  premium_activation: >-
+    Several response fields (remotes[].isSelfHosted, remotes[].authOptions,
+    remotes[].tools, packages[].authOptions, packages[].tools) are marked Premium
+    and are activated per tenant by contacting hello@pulsemcp.com.
+
+failure_modes:
+  - status: 401
+    code: unauthorized
+    meaning: Missing or invalid API key.
+  - status: 403
+    code: forbidden
+    meaning: Valid API key but access denied (e.g. tenant not entitled).
+
+environment_variables_note: >-
+  The first-party @pulsemcp/pulse-subregistry MCP server maps these headers to
+  environment variables.
+environment_variables:
+  - name: PULSEMCP_SUBREGISTRY_API_KEY
+    maps_to: X-API-Key
+    required: true
+  - name: PULSEMCP_SUBREGISTRY_TENANT_ID
+    maps_to: X-Tenant-ID
+    required: false

@@ -1,0 +1,70 @@
+generated: '2026-08-13'
+method: probed
+source: >-
+  Live HTTP probes on 2026-08-13 of every base host in apis.yml
+  (https://api.pulsemcp.com) plus the documentation/console host
+  (https://www.pulsemcp.com).
+description: >-
+  Results of probing the /.well-known/ discovery surface. NOTHING WAS FOUND, and no
+  WellKnown or SecurityTxt pointer is emitted in apis.yml as a result — this file
+  records an absence, not a presence.
+
+  api.pulsemcp.com answers every unrecognised path with a genuine JSON 404
+  ({"error":"Invalid path...","code":"invalid_path"}), so its 404s are real
+  measurements from the API itself, not a catch-all shell.
+
+  www.pulsemcp.com sits behind Cloudflare bot management and returns 403 to direct
+  HTTP clients on every path except /robots.txt. That 403 is a wall in front of us,
+  not evidence of absence — with one exception: a rendering fetch that Cloudflare
+  did admit resolved https://www.pulsemcp.com/.well-known/security.txt to a genuine
+  HTTP 404, so PulseMCP demonstrably does not serve an RFC 9116 security.txt.
+hosts:
+  - host: https://api.pulsemcp.com
+    note: >-
+      Real API host. Serves a JSON error envelope on unknown paths, so these 404s
+      are authoritative.
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: https://www.pulsemcp.com
+    note: >-
+      Marketing + documentation host. Cloudflare returns 403 to non-browser clients
+      on every path below; treat these as "not measurable by a direct client"
+      rather than as absences, except security.txt which was independently
+      confirmed 404 through a rendering fetch.
+    documents:
+      - path: /.well-known/security.txt
+        status: 403
+        confirmed_status: 404
+        confirmed_via: rendering fetch admitted by Cloudflare on 2026-08-13
+      - path: /.well-known/openid-configuration
+        status: 403
+      - path: /.well-known/oauth-authorization-server
+        status: 403
+      - path: /.well-known/oauth-protected-resource
+        status: 403
+      - path: /.well-known/api-catalog
+        status: 403
+      - path: /.well-known/ai-plugin.json
+        status: 403
+      - path: /.well-known/agent-card.json
+        status: 403
+      - path: /.well-known/agent.json
+        status: 403
+documents_saved: []
+agent_card_found: false
+security_txt_found: false

@@ -1,0 +1,101 @@
+generated: '2026-08-13'
+method: searched
+source: https://github.com/pulsemcp/air/blob/main/docs/cli.md
+description: >-
+  PulseMCP ships one first-party CLI: `air`, the command-line interface to AIR
+  (Agent Infrastructure Repository) — its open-source framework for declaring an
+  organization's agent artifacts (skills, MCP servers, references, plugins, roots,
+  hooks) once and translating them into each coding agent's native config format.
+
+  Note what this CLI is NOT: there is no CLI for the PulseMCP Registry API. `air`
+  never talks to api.pulsemcp.com. It is a local config-composition tool, and it is
+  the most substantial piece of developer tooling PulseMCP publishes.
+docs: https://github.com/pulsemcp/air/blob/main/docs/cli.md
+repo: https://github.com/pulsemcp/air
+binary: air
+package: '@pulsemcp/air-cli'
+version: '0.13.1'
+published: '2026-06-22'
+license: MIT
+
+install:
+  npm_global: npm install -g @pulsemcp/air-cli
+  npx: npx @pulsemcp/air-cli <command>
+
+commands:
+  setup:
+    - name: init
+      description: >-
+        Initialize a new AIR configuration at ~/.air/. Scaffolds air.json pre-wired
+        to local index files for all six artifact types, one $schema-referenced
+        index per type, and a README. Inside a git repo with AIR index files it also
+        auto-discovers them and adds github:// resolver URIs. Idempotent "top-up"
+        mode on re-run; --force regenerates air.json from scratch.
+      flags: ['--force']
+  validation:
+    - name: validate <file>
+      description: >-
+        Validate a JSON file against its AIR schema. Schema is detected from the
+        filename; --schema overrides it.
+      flags: ['--schema <air|skills|references|mcp|plugins|roots|hooks>']
+      exit_codes: {0: validation passed, 1: validation failed (errors on stderr)}
+  sessions:
+    - name: start <agent>
+      description: >-
+        Start an agent session with AIR configurations loaded. Loads ~/.air/air.json
+        (or AIR_CONFIG), resolves the root's default artifacts, translates them to
+        the target agent's format, shows a summary, prompts, then writes the
+        agent-specific config files and starts the agent.
+      agents: [claude, codex, cursor, pi]
+      agent_note: >-
+        Adapters are discovered as @pulsemcp/air-adapter-<agent> packages; the four
+        above are officially maintained (pi is skills-only).
+      flags: ['--root <name>', '--dry-run', '--skip-confirmation', '--git-protocol <ssh|https>']
+  inspection:
+    - name: list <type>
+      description: >-
+        List available artifacts of a given type (skills, mcp, plugins, roots,
+        hooks, references) — the merged result across every file in air.json.
+    - name: resolve
+      description: >-
+        Resolve the active air.json and print the full merged artifact tree as JSON
+        to stdout. Runs catalog providers (e.g. github://) and emits the same
+        ResolvedArtifacts object returned by resolveArtifacts() in
+        @pulsemcp/air-core. Intended for non-Node consumers — Ruby, Python,
+        orchestrators, dashboards — that need the resolved tree without
+        reimplementing the pipeline. Keys are qualified IDs (@scope/id) and all
+        paths are absolute, so the output is self-contained.
+      flags: ['--json', '--no-scope', '--config <path>', '--git-protocol <ssh|https>']
+      exit_codes: {0: resolved successfully, 1: resolution failed}
+  maintenance:
+    - name: clean [adapter]
+      description: Remove AIR-written agent config files.
+    - name: prepare
+      description: Resolve and stage artifacts ahead of a session.
+    - name: install
+      description: Install artifacts / extensions declared in air.json.
+    - name: update
+      description: Update resolved catalogs and artifacts.
+    - name: upgrade
+      description: Upgrade the AIR configuration to the current schema shape.
+    - name: export
+      description: >-
+        Export artifacts into another distribution format — e.g. `air export cowork`
+        builds a distributable Claude Co-work plugin directory via
+        @pulsemcp/air-cowork.
+  maintenance_note: >-
+    prepare/install/update/upgrade/export/clean are present as command modules in
+    packages/cli/src/commands/ and are referenced throughout the AIR docs and
+    changelog; docs/cli.md documents init, validate, start, list, resolve and clean
+    in full. The one-line descriptions above for the remainder are summarized from
+    the repository rather than quoted from a reference page.
+
+environment_variables:
+  - name: AIR_CONFIG
+    description: Path to air.json. Overrides the ~/.air/air.json default.
+  - name: AIR_GIT_PROTOCOL
+    description: ssh or https — protocol used by git-based catalog providers when cloning.
+
+related:
+  packages: packages/pulsemcp-packages.yml
+  skills: skills/_index.yml

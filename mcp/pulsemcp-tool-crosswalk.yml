@@ -1,0 +1,109 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  Derived from two first-party sources read on 2026-08-13: the PulseMCP Registry
+  API reference at https://www.pulsemcp.com/api/docs/v0.1, and the MCP server's own
+  HTTP client at
+  https://github.com/pulsemcp/mcp-servers/blob/main/productionized/pulse-subregistry/shared/src/client.ts
+  which constructs each REST path verbatim.
+description: >-
+  Binds every tool of the @pulsemcp/pulse-subregistry MCP server to the PulseMCP
+  Registry API operation it calls. Confidence is high on the two data tools because
+  the binding is not inferred from naming — the server's own source code builds the
+  exact URL (`${baseUrl}/v0.1/servers` and
+  `${baseUrl}/v0.1/servers/{name}/versions/{version}`), so the mapping is proven
+  rather than guessed.
+
+  CAVEAT ON operationIds: PulseMCP publishes NO OpenAPI, so there are no
+  operationIds to bind to. The `rest:` rows below name the documented HTTP
+  method + path instead. If PulseMCP ever publishes a spec, these rows should be
+  re-bound to real operationIds.
+
+surfaces:
+  openapi:
+    present: false
+    note: >-
+      No OpenAPI/Swagger document is served at any probed location on
+      api.pulsemcp.com (/openapi.json, /openapi.yaml, /swagger.json,
+      /v0.1/openapi.json, /api-docs, /docs, /redoc all return the API's JSON 404).
+      The docs page states the API "implements the Generic MCP Registry API
+      specification" and links to the upstream spec at
+      https://github.com/modelcontextprotocol/registry — that upstream document
+      belongs to the Model Context Protocol project, NOT to PulseMCP, and is
+      deliberately not captured here as PulseMCP's contract.
+  rest:
+    base: https://api.pulsemcp.com
+    version_prefix: /v0.1
+    docs: https://www.pulsemcp.com/api/docs/v0.1
+    gated: true
+    gate: X-API-Key required on every path including /v0.1/health; keys issued by
+      emailing hello@pulsemcp.com.
+  graphql:
+    present: false
+  mcp:
+    server: com.pulsemcp/pulse-subregistry
+    transport: stdio
+    endpoint: null
+    gated: true
+    gate: PULSEMCP_SUBREGISTRY_API_KEY required; no remote endpoint to introspect.
+
+crosswalk:
+  - tool: list_servers
+    category: discovery
+    rest:
+      - GET /v0.1/servers
+    binding: direct
+    confidence: high
+    note: >-
+      client.listServers() builds `/v0.1/servers` and forwards cursor, limit,
+      search, version and updated_since as query parameters. The tool's
+      `latest_only: true` default is translated into `version=latest` on the wire.
+      The tool adds one MCP-only parameter, `expand_fields`, which has no REST
+      equivalent — it controls client-side truncation of strings over 200
+      characters before the payload reaches the model.
+  - tool: get_server
+    category: discovery
+    rest:
+      - GET /v0.1/servers/{serverName}/versions/{version}
+    binding: direct
+    confidence: high
+    note: >-
+      client.getServer() URL-encodes serverName and version and builds
+      `/v0.1/servers/{serverName}/versions/{version}`. Defaults version to
+      "latest". `expand_fields` is again MCP-only client-side truncation control.
+  - tool: switch_tenant_id
+    category: session-control
+    rest: []
+    binding: none
+    confidence: high
+    note: >-
+      Client-side only. Mutates the X-Tenant-ID header used on subsequent calls;
+      issues no HTTP request of its own. Hidden unless SHOW_ADMIN_TOOLS=true.
+
+mcp_only:
+  - tool: switch_tenant_id
+    reason: >-
+      Session/header state management. There is no REST operation for it — the
+      REST equivalent is simply sending a different X-Tenant-ID header.
+
+rest_only:
+  - operation: GET /v0.1/servers/{serverName}/versions
+    reason: >-
+      Lists every version of one server. The MCP server exposes no tool for it;
+      get_server can only fetch one named version (or "latest") at a time.
+  - operation: GET /v0.1/health
+    reason: Utility/liveness endpoint; returns {"status":"healthy"}. No tool wraps it.
+  - operation: GET /v0.1/ping
+    reason: Utility endpoint; returns {"pong":true}. No tool wraps it.
+  - operation: GET /v0.1/version
+    reason: >-
+      Returns API version, git commit and build timestamp. No tool wraps it, which
+      means an agent using the MCP server cannot tell which build it is talking to.
+
+coverage:
+  rest_operations_documented: 5
+  tools_total: 3
+  tools_bound_to_rest: 2
+  tools_mcp_only: 1
+  rest_operations_unbound: 4
+  bound_ratio: 0.4

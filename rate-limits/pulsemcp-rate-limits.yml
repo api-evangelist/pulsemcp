@@ -1,0 +1,65 @@
+generated: '2026-08-13'
+method: searched
+source: https://www.pulsemcp.com/api/docs/v0.1
+description: >-
+  PulseMCP publishes three concurrent rate-limit windows for the Registry API and,
+  unusually for a small provider, documents a full set of per-window response
+  headers so a client can see its remaining budget in each window on every
+  response. Limits are documented as flat — there are no published tiers, because
+  there are no published plans.
+docs: https://www.pulsemcp.com/api/docs/v0.1
+base_url: https://api.pulsemcp.com
+scope_note: >-
+  The documentation does not state whether the windows are counted per API key,
+  per tenant, or per IP. Recorded here as per-key because the key is the only
+  credential required on every request; this is an inference, not a published fact.
+
+limit_count: 3
+limits:
+  - name: Per-minute request budget
+    scope: per-key
+    window: minute
+    limit: 200
+    burst: null
+  - name: Per-hour request budget
+    scope: per-key
+    window: hour
+    limit: 5000
+    burst: null
+  - name: Per-day request budget
+    scope: per-key
+    window: day
+    limit: 10000
+    burst: null
+
+response_headers:
+  - name: X-RateLimit-Limit-Minute
+    meaning: Ceiling for the current minute window.
+  - name: X-RateLimit-Limit-Hour
+    meaning: Ceiling for the current hour window.
+  - name: X-RateLimit-Limit-Day
+    meaning: Ceiling for the current day window.
+  - name: X-RateLimit-Remaining-Minute
+    meaning: Requests left in the current minute window.
+  - name: X-RateLimit-Remaining-Hour
+    meaning: Requests left in the current hour window.
+  - name: X-RateLimit-Remaining-Day
+    meaning: Requests left in the current day window.
+
+exhaustion:
+  status: 429
+  code: rate_limit_exceeded
+  envelope: '{"error": "...", "code": "...", "details": {}}'
+  retry_after_header: not documented
+  note: >-
+    The documented headers cover limit and remaining but NOT reset. There is no
+    documented `Retry-After`, no `X-RateLimit-Reset-*`, and no
+    RFC 9238 `RateLimit`/`RateLimit-Policy` header, so a throttled agent is told
+    that it is out of budget but not when the budget returns — it has to infer the
+    reset from the window name.
+
+headers_observed_live: false
+observation_note: >-
+  Header presence could not be confirmed on the wire: every unauthenticated request
+  to api.pulsemcp.com returns 401 before rate-limit accounting, and keys are issued
+  only by emailing hello@pulsemcp.com. Values above are as published.

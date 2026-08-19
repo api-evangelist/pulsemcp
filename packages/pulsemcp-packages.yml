@@ -1,0 +1,643 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://github.com/pulsemcp/mcp-servers (32 first-party MCP server manifests,
+  each a server.json naming its npm identifier) and
+  https://github.com/pulsemcp/air (the AIR framework monorepo). Every version and
+  publish date below was read from the npm registry metadata endpoint
+  https://registry.npmjs.org/<pkg> on 2026-08-13, not from the repo.
+description: >-
+  First-party PulseMCP packages published to npm. PulseMCP ships NO client SDK for
+  its own PulseMCP Registry API (api.pulsemcp.com) in any language — the only
+  first-party client for that API is the @pulsemcp/pulse-subregistry MCP server,
+  which embeds a hand-rolled fetch client. Everything else PulseMCP publishes is
+  either (a) an MCP server that wraps somebody else's product, or (b) the AIR
+  (Agent Infrastructure Repository) framework. All packages are published by the
+  npm accounts `tadasant` (Tadas Antanavicius) and `macoughl` (Mike Coughlin), the
+  two PulseMCP founders, from repositories in the github.com/pulsemcp organization.
+notes:
+  - >-
+    Currency signal: the four `@pulsemcp/*` productionized MCP servers and the bulk
+    of the experimental servers were last published 2026-06-14; the AIR framework
+    packages were all cut together at 0.13.1 on 2026-06-22. Nothing in this set has
+    been republished since 2026-07-10.
+  - >-
+    The 28 experimental servers publish under UNSCOPED npm names
+    (e.g. `gmail-workspace-mcp-server`), not under the `@pulsemcp/` scope. The scope
+    is only used for the four productionized servers and the AIR packages.
+  - >-
+    A registry-wide npm search for `scope:pulsemcp` returns 0 objects; every entry
+    below was confirmed by a direct GET against registry.npmjs.org.
+packages:
+  - language: javascript
+    registry: npm
+    name: "@pulsemcp/air-cli"
+    url: https://www.npmjs.com/package/@pulsemcp/air-cli
+    source: https://github.com/pulsemcp/air
+    install: npm install -g @pulsemcp/air-cli
+    official: true
+    group: air-framework
+    version: '0.13.1'
+    published: '2026-06-22'
+    description: >-
+      CLI for the AIR (Agent Infrastructure Repository) framework. Provides the `air` binary.
+  - language: javascript
+    registry: npm
+    name: "@pulsemcp/air-core"
+    url: https://www.npmjs.com/package/@pulsemcp/air-core
+    source: https://github.com/pulsemcp/air
+    install: npm install @pulsemcp/air-core
+    official: true
+    group: air-framework
+    version: '0.13.1'
+    published: '2026-06-22'
+    description: >-
+      AIR core — config resolution, validation, schemas, and extension interfaces.
+  - language: javascript
+    registry: npm
+    name: "@pulsemcp/air-sdk"
+    url: https://www.npmjs.com/package/@pulsemcp/air-sdk
+    source: https://github.com/pulsemcp/air
+    install: npm install @pulsemcp/air-sdk
+    official: true
+    group: air-framework
+    version: '0.13.1'
+    published: '2026-06-22'
+    description: >-
+      AIR SDK — programmatic API for the Agent Infrastructure Repository framework.
+  - language: javascript
+    registry: npm
+    name: "@pulsemcp/air-adapter-claude"
+    url: https://www.npmjs.com/package/@pulsemcp/air-adapter-claude
+    source: https://github.com/pulsemcp/air
+    install: npm install @pulsemcp/air-adapter-claude
+    official: true
+    group: air-framework
+    version: '0.13.1'
+    published: '2026-06-22'
+    description: >-
+      AIR adapter for Claude Code — translates AIR config to Claude Code format.
+  - language: javascript
+    registry: npm
+    name: "@pulsemcp/air-adapter-codex"
+    url: https://www.npmjs.com/package/@pulsemcp/air-adapter-codex
+    source: https://github.com/pulsemcp/air
+    install: npm install @pulsemcp/air-adapter-codex
+    official: true
+    group: air-framework
+    version: '0.13.1'
+    published: '2026-06-22'
+    description: >-
+      AIR adapter for OpenAI Codex CLI — translates AIR config to Codex format.
+  - language: javascript
+    registry: npm
+    name: "@pulsemcp/air-adapter-cursor"
+    url: https://www.npmjs.com/package/@pulsemcp/air-adapter-cursor
+    source: https://github.com/pulsemcp/air
+    install: npm install @pulsemcp/air-adapter-cursor
+    official: true
+    group: air-framework
+    version: '0.13.1'
+    published: '2026-06-22'
+    description: >-
+      AIR adapter for Cursor CLI — translates AIR config to Cursor format.
+  - language: javascript
+    registry: npm
+    name: "@pulsemcp/air-adapter-pi"
+    url: https://www.npmjs.com/package/@pulsemcp/air-adapter-pi
+    source: https://github.com/pulsemcp/air
+    install: npm install @pulsemcp/air-adapter-pi
+    official: true
+    group: air-framework
+    version: '0.13.1'
+    published: '2026-06-22'
+    description: >-
+      AIR adapter for the Pi coding agent — injects AIR skills into Pi.
+  - language: javascript
+    registry: npm
+    name: "@pulsemcp/air-cowork"
+    url: https://www.npmjs.com/package/@pulsemcp/air-cowork
+    source: https://github.com/pulsemcp/air
+    install: npm install @pulsemcp/air-cowork
+    official: true
+    group: air-framework
+    version: '0.13.1'
+    published: '2026-06-22'
+    description: >-
+      AIR plugin emitter for Claude Co-work — builds distributable plugin directories.
+  - language: javascript
+    registry: npm
+    name: "@pulsemcp/air-provider-github"
+    url: https://www.npmjs.com/package/@pulsemcp/air-provider-github
+    source: https://github.com/pulsemcp/air
+    install: npm install @pulsemcp/air-provider-github
+    official: true
+    group: air-framework
+    version: '0.13.1'
+    published: '2026-06-22'
+    description: >-
+      AIR catalog provider for GitHub — resolves github:// URIs to artifact catalogs.
+  - language: javascript
+    registry: npm
+    name: "@pulsemcp/air-secrets-env"
+    url: https://www.npmjs.com/package/@pulsemcp/air-secrets-env
+    source: https://github.com/pulsemcp/air
+    install: npm install @pulsemcp/air-secrets-env
+    official: true
+    group: air-framework
+    version: '0.13.1'
+    published: '2026-06-22'
+    description: >-
+      AIR transform that resolves ${VAR} patterns from process.env in MCP configs.
+  - language: javascript
+    registry: npm
+    name: "@pulsemcp/air-secrets-file"
+    url: https://www.npmjs.com/package/@pulsemcp/air-secrets-file
+    source: https://github.com/pulsemcp/air
+    install: npm install @pulsemcp/air-secrets-file
+    official: true
+    group: air-framework
+    version: '0.13.1'
+    published: '2026-06-22'
+    description: >-
+      AIR transform that resolves ${VAR} patterns from a JSON secrets file.
+  - language: javascript
+    registry: npm
+    name: "@pulsemcp/image-diff-mcp-server"
+    url: https://www.npmjs.com/package/@pulsemcp/image-diff-mcp-server
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/productionized/image-diff
+    install: npx -y @pulsemcp/image-diff-mcp-server
+    official: true
+    group: mcp-server-productionized
+    version: '0.1.3'
+    published: '2026-06-14'
+    license: MIT
+    description: >-
+      MCP server for programmatic image comparison and visual diff generation.
+    note: >-
+      MCP server, stdio transport. Registry identity com.pulsemcp/image-diff (server.json declares version 0.1.3). Catalogued in mcp/pulsemcp-mcp.yml.
+  - language: javascript
+    registry: npm
+    name: "@pulsemcp/pulse-fetch"
+    url: https://www.npmjs.com/package/@pulsemcp/pulse-fetch
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/productionized/pulse-fetch
+    install: npx -y @pulsemcp/pulse-fetch
+    official: true
+    group: mcp-server-productionized
+    version: '0.3.3'
+    published: '2026-06-14'
+    license: MIT
+    description: >-
+      MCP server for fetching web resources with content extraction and anti-bot bypass.
+    note: >-
+      MCP server, stdio transport. Registry identity com.pulsemcp/pulse-fetch (server.json declares version 0.3.3). Catalogued in mcp/pulsemcp-mcp.yml.
+  - language: javascript
+    registry: npm
+    name: "@pulsemcp/pulse-subregistry"
+    url: https://www.npmjs.com/package/@pulsemcp/pulse-subregistry
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/productionized/pulse-subregistry
+    install: npx -y @pulsemcp/pulse-subregistry
+    official: true
+    group: mcp-server-productionized
+    version: '0.0.8'
+    published: '2026-06-14'
+    license: MIT
+    description: >-
+      MCP server providing access to the PulseMCP Sub-Registry for browsing and discovering MCP servers.
+    note: >-
+      MCP server, stdio transport. Registry identity com.pulsemcp/pulse-subregistry (server.json declares version 0.0.8). Catalogued in mcp/pulsemcp-mcp.yml.
+  - language: javascript
+    registry: npm
+    name: "@pulsemcp/svg-tracer-mcp-server"
+    url: https://www.npmjs.com/package/@pulsemcp/svg-tracer-mcp-server
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/productionized/svg-tracer
+    install: npx -y @pulsemcp/svg-tracer-mcp-server
+    official: true
+    group: mcp-server-productionized
+    version: '0.1.3'
+    published: '2026-06-14'
+    license: GPL-2.0
+    description: >-
+      MCP server for converting bitmap images to SVG vector graphics using potrace tracing.
+    note: >-
+      MCP server, stdio transport. Registry identity com.pulsemcp/svg-tracer (server.json declares version 0.1.3). Catalogued in mcp/pulsemcp-mcp.yml.
+  - language: javascript
+    registry: npm
+    name: "agent-orchestrator-mcp-server"
+    url: https://www.npmjs.com/package/agent-orchestrator-mcp-server
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/agent-orchestrator
+    install: npx -y agent-orchestrator-mcp-server
+    official: true
+    group: mcp-server-experimental
+    version: '0.8.11'
+    published: '2026-07-06'
+    license: MIT
+    description: >-
+      MCP server for PulseMCP's Agent Orchestrator — manage agent sessions, notifications, and triggers.
+    note: >-
+      MCP server, stdio transport. Registry identity com.pulsemcp/agent-orchestrator (server.json declares version 0.8.11). Catalogued in mcp/pulsemcp-mcp.yml.
+  - language: javascript
+    registry: npm
+    name: "appsignal-mcp-server"
+    url: https://www.npmjs.com/package/appsignal-mcp-server
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/appsignal
+    install: npx -y appsignal-mcp-server
+    official: true
+    group: mcp-server-experimental
+    version: '0.5.4'
+    published: '2026-06-14'
+    license: MIT
+    description: >-
+      MCP server for AppSignal — get alert details, search logs, and retrieve logs within time ranges.
+    note: >-
+      MCP server, stdio transport. Registry identity com.pulsemcp/appsignal (server.json declares version 0.5.4). Catalogued in mcp/pulsemcp-mcp.yml.
+  - language: javascript
+    registry: npm
+    name: "claude-code-agent-mcp-server"
+    url: https://www.npmjs.com/package/claude-code-agent-mcp-server
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/claude-code-agent
+    install: npx -y claude-code-agent-mcp-server
+    official: true
+    group: mcp-server-experimental
+    version: '0.0.8'
+    published: '2026-06-14'
+    license: MIT
+    description: >-
+      Claude Code Agent MCP Server - enables agentic MCP configuration to solve tool overload
+    note: >-
+      MCP server, stdio transport. Registry identity com.pulsemcp/claude-code-agent (server.json declares version 0.0.8). Catalogued in mcp/pulsemcp-mcp.yml.
+  - language: javascript
+    registry: npm
+    name: "aws-dynamodb-mcp-server"
+    url: https://www.npmjs.com/package/aws-dynamodb-mcp-server
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/dynamodb
+    install: npx -y aws-dynamodb-mcp-server
+    official: true
+    group: mcp-server-experimental
+    version: '0.2.7'
+    published: '2026-06-14'
+    license: MIT
+    description: >-
+      MCP server for AWS DynamoDB with fine-grained tool control and configurable access levels.
+    note: >-
+      MCP server, stdio transport. Registry identity com.pulsemcp/dynamodb (server.json declares version 0.2.7). Catalogued in mcp/pulsemcp-mcp.yml.
+  - language: javascript
+    registry: npm
+    name: "fetchpet-mcp-server"
+    url: https://www.npmjs.com/package/fetchpet-mcp-server
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/fetchpet
+    install: npx -y fetchpet-mcp-server
+    official: true
+    group: mcp-server-experimental
+    version: '0.1.8'
+    published: '2026-06-14'
+    license: MIT
+    description: >-
+      MCP server for Fetch Pet insurance claims management using Playwright automation.
+    note: >-
+      MCP server, stdio transport. Registry identity com.pulsemcp/fetchpet (server.json declares version 0.1.8). Catalogued in mcp/pulsemcp-mcp.yml.
+  - language: javascript
+    registry: npm
+    name: "fly-io-mcp-server"
+    url: https://www.npmjs.com/package/fly-io-mcp-server
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/fly-io
+    install: npx -y fly-io-mcp-server
+    official: true
+    group: mcp-server-experimental
+    version: '0.1.7'
+    published: '2026-06-14'
+    license: MIT
+    description: >-
+      MCP server for managing Fly.io machines, apps, logs, and Docker images.
+    note: >-
+      MCP server, stdio transport. Registry identity com.pulsemcp/fly-io (server.json declares version 0.1.7). Catalogued in mcp/pulsemcp-mcp.yml.
+  - language: javascript
+    registry: npm
+    name: "gcs-google-mcp-server"
+    url: https://www.npmjs.com/package/gcs-google-mcp-server
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/gcs
+    install: npx -y gcs-google-mcp-server
+    official: true
+    group: mcp-server-experimental
+    version: '0.1.14'
+    published: '2026-06-14'
+    license: MIT
+    description: >-
+      MCP server for Google Cloud Storage with fine-grained tool access control.
+    note: >-
+      MCP server, stdio transport. Registry identity com.pulsemcp/gcs (server.json declares version 0.1.14). Catalogued in mcp/pulsemcp-mcp.yml.
+  - language: javascript
+    registry: npm
+    name: "gmail-workspace-mcp-server"
+    url: https://www.npmjs.com/package/gmail-workspace-mcp-server
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/gmail
+    install: npx -y gmail-workspace-mcp-server
+    official: true
+    group: mcp-server-experimental
+    version: '0.4.12'
+    published: '2026-07-10'
+    license: MIT
+    description: >-
+      MCP server for Gmail with OAuth2 (personal) and service account (Workspace) support.
+    note: >-
+      MCP server, stdio transport. Registry identity com.pulsemcp/gmail (server.json declares version 0.4.12). Catalogued in mcp/pulsemcp-mcp.yml.
+  - language: javascript
+    registry: npm
+    name: "good-eggs-mcp-server"
+    url: https://www.npmjs.com/package/good-eggs-mcp-server
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/good-eggs
+    install: npx -y good-eggs-mcp-server
+    official: true
+    group: mcp-server-experimental
+    version: '0.1.11'
+    published: '2026-06-30'
+    license: MIT
+    description: >-
+      MCP server for Good Eggs grocery shopping automation using Playwright.
+    note: >-
+      MCP server, stdio transport. Registry identity com.pulsemcp/good-eggs (server.json declares version 0.1.11). Catalogued in mcp/pulsemcp-mcp.yml.
+  - language: javascript
+    registry: npm
+    name: "google-calendar-workspace-mcp-server"
+    url: https://www.npmjs.com/package/google-calendar-workspace-mcp-server
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/google-calendar
+    install: npx -y google-calendar-workspace-mcp-server
+    official: true
+    group: mcp-server-experimental
+    version: '0.0.13'
+    published: '2026-06-14'
+    license: MIT
+    description: >-
+      MCP server for Google Calendar integration with service account support and domain-wide delegation.
+    note: >-
+      MCP server, stdio transport. Registry identity com.pulsemcp/google-calendar (server.json declares version 0.0.13). Catalogued in mcp/pulsemcp-mcp.yml.
+  - language: javascript
+    registry: npm
+    name: "google-docs-workspace-mcp-server"
+    url: https://www.npmjs.com/package/google-docs-workspace-mcp-server
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/google-docs
+    install: npx -y google-docs-workspace-mcp-server
+    official: true
+    group: mcp-server-experimental
+    version: '0.1.4'
+    published: '2026-06-14'
+    license: MIT
+    description: >-
+      MCP server for Google Docs integration with OAuth2 and service account support.
+    note: >-
+      MCP server, stdio transport. Registry identity com.pulsemcp/google-docs (server.json declares version 0.1.4). Catalogued in mcp/pulsemcp-mcp.yml.
+  - language: javascript
+    registry: npm
+    name: "google-flights-mcp-server"
+    url: https://www.npmjs.com/package/google-flights-mcp-server
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/google-flights
+    install: npx -y google-flights-mcp-server
+    official: true
+    group: mcp-server-experimental
+    version: '0.2.6'
+    published: '2026-06-26'
+    license: MIT
+    description: >-
+      MCP server for searching Google Flights — flight search, date grid pricing, and airport lookup.
+    note: >-
+      MCP server, stdio transport. Registry identity com.pulsemcp/google-flights (server.json declares version 0.2.6). Catalogued in mcp/pulsemcp-mcp.yml.
+  - language: javascript
+    registry: npm
+    name: "hatchbox-mcp-server"
+    url: https://www.npmjs.com/package/hatchbox-mcp-server
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/hatchbox
+    install: npx -y hatchbox-mcp-server
+    official: true
+    group: mcp-server-experimental
+    version: '0.1.3'
+    published: '2026-06-14'
+    license: MIT
+    description: >-
+      MCP server for Hatchbox Rails hosting — env var inspection, deploys, and process monitoring.
+    note: >-
+      MCP server, stdio transport. Registry identity com.pulsemcp/hatchbox (server.json declares version 0.1.3). Catalogued in mcp/pulsemcp-mcp.yml.
+  - language: javascript
+    registry: npm
+    name: "langfuse-observability-mcp-server"
+    url: https://www.npmjs.com/package/langfuse-observability-mcp-server
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/langfuse
+    install: npx -y langfuse-observability-mcp-server
+    official: true
+    group: mcp-server-experimental
+    version: '0.1.3'
+    published: '2026-06-14'
+    license: MIT
+    description: >-
+      MCP server for Langfuse LLM observability — trace and observation analysis.
+    note: >-
+      MCP server, stdio transport. Registry identity com.pulsemcp/langfuse (server.json declares version 0.1.3). Catalogued in mcp/pulsemcp-mcp.yml.
+  - language: javascript
+    registry: npm
+    name: "monarch-money-mcp-server"
+    url: https://www.npmjs.com/package/monarch-money-mcp-server
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/monarch-money
+    install: npx -y monarch-money-mcp-server
+    official: true
+    group: mcp-server-experimental
+    version: '0.0.13'
+    published: '2026-07-06'
+    license: MIT
+    description: >-
+      MCP server for Monarch Money — account, transaction, and budget management.
+    note: >-
+      MCP server, stdio transport. Registry identity com.pulsemcp/monarch-money (server.json declares version 0.0.13). Catalogued in mcp/pulsemcp-mcp.yml.
+  - language: javascript
+    registry: npm
+    name: "onepassword-mcp-server"
+    url: https://www.npmjs.com/package/onepassword-mcp-server
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/onepassword
+    install: npx -y onepassword-mcp-server
+    official: true
+    group: mcp-server-experimental
+    version: '0.5.4'
+    published: '2026-06-14'
+    license: MIT
+    description: >-
+      MCP server for interacting with 1Password via the CLI to read and manage credentials.
+    note: >-
+      MCP server, stdio transport. Registry identity com.pulsemcp/onepassword (server.json declares version 0.5.4). Catalogued in mcp/pulsemcp-mcp.yml.
+  - language: javascript
+    registry: npm
+    name: "playwright-stealth-mcp-server"
+    url: https://www.npmjs.com/package/playwright-stealth-mcp-server
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/playwright-stealth
+    install: npx -y playwright-stealth-mcp-server
+    official: true
+    group: mcp-server-experimental
+    version: '0.2.3'
+    published: '2026-06-14'
+    license: MIT
+    description: >-
+      Browser automation using Playwright with optional stealth mode to bypass anti-bot protection.
+    note: >-
+      MCP server, stdio transport. Registry identity com.pulsemcp/playwright-stealth (server.json declares version 0.2.3). Catalogued in mcp/pulsemcp-mcp.yml.
+  - language: javascript
+    registry: npm
+    name: "pointsyeah-mcp-server"
+    url: https://www.npmjs.com/package/pointsyeah-mcp-server
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/pointsyeah
+    install: npx -y pointsyeah-mcp-server
+    official: true
+    group: mcp-server-experimental
+    version: '0.2.9'
+    published: '2026-06-14'
+    license: MIT
+    description: >-
+      MCP server for searching award flights and travel deals via PointsYeah.
+    note: >-
+      MCP server, stdio transport. Registry identity com.pulsemcp/pointsyeah (server.json declares version 0.2.9). Catalogued in mcp/pulsemcp-mcp.yml.
+  - language: javascript
+    registry: npm
+    name: "proctor-mcp-server"
+    url: https://www.npmjs.com/package/proctor-mcp-server
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/proctor
+    install: npx -y proctor-mcp-server
+    official: true
+    group: mcp-server-experimental
+    version: '0.1.9'
+    published: '2026-06-14'
+    license: MIT
+    description: >-
+      MCP server for running Proctor exams against MCP servers with exam execution and result management.
+    note: >-
+      MCP server, stdio transport. Registry identity com.pulsemcp/proctor (server.json declares version 0.1.9). Catalogued in mcp/pulsemcp-mcp.yml.
+  - language: javascript
+    registry: npm
+    name: "pulsemcp-cms-admin-mcp-server"
+    url: https://www.npmjs.com/package/pulsemcp-cms-admin-mcp-server
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/pulsemcp-cms-admin
+    install: npx -y pulsemcp-cms-admin-mcp-server
+    official: true
+    group: mcp-server-experimental
+    version: '0.10.6'
+    published: '2026-06-30'
+    license: MIT
+    description: >-
+      MCP server for managing PulseMCP's CMS — newsletter and MCP server directory.
+    note: >-
+      MCP server, stdio transport. Registry identity com.pulsemcp/pulsemcp-cms-admin (server.json declares version 0.10.6). Catalogued in mcp/pulsemcp-mcp.yml.
+  - language: javascript
+    registry: npm
+    name: "remote-filesystem-mcp-server"
+    url: https://www.npmjs.com/package/remote-filesystem-mcp-server
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/remote-filesystem
+    install: npx -y remote-filesystem-mcp-server
+    official: true
+    group: mcp-server-experimental
+    version: '0.1.5'
+    published: '2026-06-22'
+    license: MIT
+    description: >-
+      MCP server for remote filesystem operations on cloud storage (Google Cloud Storage).
+    note: >-
+      MCP server, stdio transport. Registry identity com.pulsemcp/remote-filesystem (server.json declares version 0.1.5). Catalogued in mcp/pulsemcp-mcp.yml.
+  - language: javascript
+    registry: npm
+    name: "s3-aws-mcp-server"
+    url: https://www.npmjs.com/package/s3-aws-mcp-server
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/s3
+    install: npx -y s3-aws-mcp-server
+    official: true
+    group: mcp-server-experimental
+    version: '0.0.5'
+    published: '2026-06-14'
+    license: MIT
+    description: >-
+      MCP server for AWS S3 with fine-grained tool control and S3-compatible endpoint support.
+    note: >-
+      MCP server, stdio transport. Registry identity com.pulsemcp/s3 (server.json declares version 0.0.5). Catalogued in mcp/pulsemcp-mcp.yml.
+  - language: javascript
+    registry: npm
+    name: "serpapi-hotels-mcp-server"
+    url: https://www.npmjs.com/package/serpapi-hotels-mcp-server
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/serpapi-hotels
+    install: npx -y serpapi-hotels-mcp-server
+    official: true
+    group: mcp-server-experimental
+    version: '0.0.4'
+    published: '2026-06-14'
+    license: MIT
+    description: >-
+      MCP server for searching Google Hotels via SerpAPI — hotel search, pricing, ratings, and reviews.
+    note: >-
+      MCP server, stdio transport. Registry identity com.pulsemcp/serpapi-hotels (server.json declares version 0.0.4). Catalogued in mcp/pulsemcp-mcp.yml.
+  - language: javascript
+    registry: npm
+    name: "slack-workspace-mcp-server"
+    url: https://www.npmjs.com/package/slack-workspace-mcp-server
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/slack
+    install: npx -y slack-workspace-mcp-server
+    official: true
+    group: mcp-server-experimental
+    version: '0.0.7'
+    published: '2026-06-14'
+    license: MIT
+    description: >-
+      MCP server for Slack — read/write messages, manage threads, and react to messages.
+    note: >-
+      MCP server, stdio transport. Registry identity com.pulsemcp/slack (server.json declares version 0.0.7). Catalogued in mcp/pulsemcp-mcp.yml.
+  - language: javascript
+    registry: npm
+    name: "ssh-agent-mcp-server"
+    url: https://www.npmjs.com/package/ssh-agent-mcp-server
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/ssh
+    install: npx -y ssh-agent-mcp-server
+    official: true
+    group: mcp-server-experimental
+    version: '0.1.5'
+    published: '2026-06-14'
+    license: MIT
+    description: >-
+      MCP server for SSH remote server management with SSH agent authentication support.
+    note: >-
+      MCP server, stdio transport. Registry identity com.pulsemcp/ssh (server.json declares version 0.1.5). Catalogued in mcp/pulsemcp-mcp.yml.
+  - language: javascript
+    registry: npm
+    name: "tailscale-vpn-mcp-server"
+    url: https://www.npmjs.com/package/tailscale-vpn-mcp-server
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/tailscale
+    install: npx -y tailscale-vpn-mcp-server
+    official: true
+    group: mcp-server-experimental
+    version: '0.0.3'
+    published: '2026-07-09'
+    license: MIT
+    description: >-
+      MCP server for administering a Tailscale tailnet: read-only introspection plus autonomous policy-file (ACL), device, and auth-key management.
+    note: >-
+      MCP server, stdio transport. Registry identity com.pulsemcp/tailscale (server.json declares version 0.0.3). Catalogued in mcp/pulsemcp-mcp.yml.
+  - language: javascript
+    registry: npm
+    name: "twist-mcp-server"
+    url: https://www.npmjs.com/package/twist-mcp-server
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/twist
+    install: npx -y twist-mcp-server
+    official: true
+    group: mcp-server-experimental
+    version: '0.2.3'
+    published: '2026-06-14'
+    license: MIT
+    description: >-
+      MCP server for Twist team messaging — manage channels, threads, and messages.
+    note: >-
+      MCP server, stdio transport. Registry identity com.pulsemcp/twist (server.json declares version 0.2.3). Catalogued in mcp/pulsemcp-mcp.yml.
+  - language: javascript
+    registry: npm
+    name: "vercel-platform-mcp-server"
+    url: https://www.npmjs.com/package/vercel-platform-mcp-server
+    source: https://github.com/pulsemcp/mcp-servers/tree/main/experimental/vercel
+    install: npx -y vercel-platform-mcp-server
+    official: true
+    group: mcp-server-experimental
+    version: '0.1.3'
+    published: '2026-06-14'
+    license: MIT
+    description: >-
+      MCP server for Vercel — manage deployments and view build and runtime application logs.
+    note: >-
+      MCP server, stdio transport. Registry identity com.pulsemcp/vercel (server.json declares version 0.1.3). Catalogued in mcp/pulsemcp-mcp.yml.

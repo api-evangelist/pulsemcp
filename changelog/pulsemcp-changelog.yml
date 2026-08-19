@@ -1,0 +1,97 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://github.com/pulsemcp/air/blob/main/CHANGELOG.md and the 32 per-server
+  CHANGELOG.md files under https://github.com/pulsemcp/mcp-servers — read
+  2026-08-13. The PulseMCP Registry API reference at
+  https://www.pulsemcp.com/api/docs/v0.1 and the /api overview page were both
+  checked for an API changelog and neither carries one.
+description: >-
+  PulseMCP keeps disciplined, dated, Keep-a-Changelog-formatted changelogs for its
+  OPEN SOURCE — the AIR framework and every MCP server — but publishes NO changelog
+  for the PulseMCP Registry API. A partner integrating against api.pulsemcp.com has
+  no published record of what changed in v0.1 or when. This artifact records both
+  facts.
+
+api_changelog:
+  published: false
+  url: null
+  scheme: path-prefix versioning only (v0.1); no dated entries
+  current_version: v0.1
+  runtime_introspection: >-
+    GET /v0.1/version returns the API version, git commit and build timestamp — the
+    only way a consumer can detect that the API changed, and it requires an API key.
+  note: >-
+    Because the API is v0.x, key-gated and partner-negotiated, changes are
+    presumably communicated directly to partners by email rather than published.
+    That is a reasonable posture for a pre-1.0 partner API and a real gap for anyone
+    evaluating it from outside.
+
+open_source_changelogs:
+  published: true
+  format: Keep a Changelog 1.1.0
+  versioning: Semantic Versioning 2.0.0
+  primary:
+    project: AIR (Agent Infrastructure Repository)
+    url: https://github.com/pulsemcp/air/blob/main/CHANGELOG.md
+    current_version: 0.13.1
+    current_date: '2026-06-22'
+    released_versions_listed: 20
+    first_entry: 0.2.1 (2026-04-28)
+  per_server:
+    note: >-
+      Each of the 32 MCP servers carries its own CHANGELOG.md alongside its
+      server.json, e.g.
+      https://github.com/pulsemcp/mcp-servers/blob/main/productionized/pulse-subregistry/CHANGELOG.md
+    count: 32
+
+entries_scope: AIR framework — recent window only. See the source for the full history.
+entries:
+  - version: 0.13.1
+    date: '2026-06-22'
+    breaking: []
+    additions: []
+    highlights:
+      - >-
+        Fixed - a single catalog's malformed content no longer aborts the entire
+        `air prepare` / `resolveArtifacts`; per-source and per-plugin failures now
+        degrade to a warning and are dropped.
+      - >-
+        The one deliberate hard failure retained is a catalog URI whose scheme has
+        no installed provider extension, raised as a new CatalogConfigError.
+  - version: 0.13.0
+    date: '2026-06-12'
+    breaking: []
+    deprecations:
+      - >-
+        Declaring a plugin's body inline on the `plugins.json` entry (no `path`) is
+        deprecated in favour of the `.plugin/plugin.json` manifest.
+    additions:
+      - >-
+        A plugin entry can externalize its body into a `.plugin/plugin.json`
+        manifest referenced by `path`, keeping `plugins.json` a lightweight registry.
+  - version: 0.12.1
+    date: '2026-06-10'
+    breaking: []
+    highlights:
+      - >-
+        `@pulsemcp/air-provider-github` — catalog `git clone`/`fetch` are now
+        bounded by a hard wall-clock timeout and retried with backoff.
+  - version: 0.12.0
+    date: '2026-06-09'
+    breaking: []
+    highlights:
+      - >-
+        Changed - root membership is now declared on artifacts via
+        `default_in_roots`, inverting the previous root-side `default_*` model.
+  - version: 0.11.0
+    date: '2026-06-04'
+    breaking: []
+    highlights:
+      - >-
+        `@pulsemcp/air-cowork` — `air export cowork` now carries each hook's
+        `HOOK.json` (and its `x-config`) into the exported plugin.
+  - version: 0.10.0
+    date: '2026-06-02'
+    breaking: []
+    highlights: []

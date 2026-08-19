@@ -1,0 +1,67 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://www.pulsemcp.com/api and https://www.pulsemcp.com/work-with-us — both
+  read on 2026-08-13. Neither page carries a price, a tier table, or a signup flow.
+description: >-
+  PulseMCP publishes NO plans and NO prices for the PulseMCP Registry API or for
+  any of its commercial services. Access is partnership-based and negotiated by
+  email. This is a deliberate contact-us posture, not an omission we failed to
+  find: the /api page says in so many words that PulseMCP is "working directly with
+  partners to provide an enriched, curated, quality-controlled MCP server registry
+  offering customized to the needs of the partner business" and instructs the
+  reader to "please reach out to hello@pulsemcp.com."
+plan_count: 0
+pricing_page: null
+currency: null
+free_tier: false
+self_service_signup: false
+contact: mailto:hello@pulsemcp.com
+plans: []
+
+what_is_free:
+  - >-
+    The whole www.pulsemcp.com directory — MCP servers, MCP clients, use cases,
+    blog, The Agentic Loop newsletter, ecosystem stats and the Discord community —
+    is free to browse with no account.
+  - >-
+    Every first-party npm package (32 MCP servers, 11 AIR framework packages) is
+    open source under MIT, except @pulsemcp/svg-tracer-mcp-server which is GPL-2.0.
+    See packages/pulsemcp-packages.yml.
+
+what_is_gated:
+  - surface: PulseMCP Registry API (api.pulsemcp.com)
+    gate: X-API-Key issued only by emailing hello@pulsemcp.com. No signup form.
+  - surface: Premium response enrichments
+    gate: >-
+      remotes[].isSelfHosted, remotes[].authOptions, remotes[].tools,
+      packages[].authOptions and packages[].tools are marked Premium in the API
+      reference and are activated per tenant on request. Everything else in the
+      response — including the popularity estimates
+      (visitorsEstimateMostRecentWeek/LastFourWeeks/Total) and isOfficial — is
+      available to any key holder.
+
+commercial_offerings_note: >-
+  Listed on https://www.pulsemcp.com/work-with-us with no prices attached.
+commercial_offerings:
+  - name: Managed MCP Sub-Registry / Catalog
+    description: >-
+      "Curated, verified server registry for gateways, platforms, and tools.
+      Live-tested, continuously updated, ready to integrate." This is the
+      commercial wrapper around the Registry API.
+    price: not published
+  - name: Agentic Engineering Consulting
+    description: >-
+      Fractional consulting for engineering leaders at 50–5,000 person
+      organizations, from hands-in-code work to a few hours a week of advising.
+    price: not published
+  - name: MCP Server Maintenance & Support
+    description: >-
+      "We keep your MCP servers working and support your end-users directly. Built
+      for enterprises that need guaranteed reliability."
+    price: not published
+  - name: Content Collaboration
+    description: >-
+      Partnership model where companies share MCP insights. PulseMCP states "No
+      money changes hands."
+    price: none

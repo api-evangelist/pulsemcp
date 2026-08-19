@@ -1,0 +1,28 @@
+generated: '2026-08-13'
+method: searched
+source: https://www.pulsemcp.com/llms.txt
+description: >-
+  PulseMCP publishes an llms.txt at https://www.pulsemcp.com/llms.txt. It is short
+  and link-shaped: five sections pointing at the servers directory, the clients
+  directory, the REST API docs, the blog, and use cases. Saved to
+  llms/pulsemcp-llms.txt.
+retrieval_caveat: >-
+  The bytes could not be captured by a direct HTTP client. www.pulsemcp.com is
+  behind Cloudflare bot management and returns HTTP 403 with a challenge page to
+  curl on every path except /robots.txt, including /llms.txt. The document was
+  retrieved through a rendering fetch that Cloudflare admitted, and transcribed
+  with the renderer's cosmetic line-wrapping removed. Section headings, link text,
+  URLs and descriptions are the provider's own; only line breaks were normalized.
+agent_access_note: >-
+  Worth recording alongside the llms.txt, because the two point in opposite
+  directions: https://www.pulsemcp.com/robots.txt (HTTP 200, the only path a plain
+  client can read) carries `Content-Signal: search=yes,ai-train=no,use=reference`
+  and an explicit `Disallow: /` for ClaudeBot, GPTBot, Google-Extended,
+  Applebot-Extended, CCBot, Bytespider, Amazonbot and meta-externalagent. So
+  PulseMCP publishes a file addressed to LLMs while its edge blocks the named LLM
+  crawlers and 403s generic clients. Its terms of service reinforce this: it
+  prohibits "any automated means, including bots, scrapers, or spiders, to access
+  or collect data from the Website (besides via the provided REST API) without our
+  prior written consent" — the REST API is the sanctioned machine path, and it
+  requires a key issued by email.
+llms_full_txt: not published

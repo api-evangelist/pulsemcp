@@ -1,0 +1,92 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://www.pulsemcp.com/api/docs/v0.1 (Error Handling section), with the 401 and
+  404 envelopes confirmed live against https://api.pulsemcp.com on 2026-08-13.
+description: >-
+  The PulseMCP Registry API's error catalogue. It uses a consistent custom JSON
+  envelope with a machine-readable `code` on every failure, which is more than most
+  providers this size publish — but it is NOT RFC 9457 problem+json: there is no
+  type URI, no title/detail/instance, and the content type is plain
+  application/json.
+format: custom-json
+rfc9457: false
+content_type: application/json
+derived_from_openapi: false
+envelope:
+  error: Human-readable message.
+  code: Machine-readable error code.
+  details: Object carrying additional context; may be empty.
+
+problem_types:
+  - code: invalid_cursor
+    status: 400
+    title: Invalid pagination cursor
+    remediation: >-
+      Do not construct cursors. Use the opaque metadata.nextCursor value returned by
+      the previous /v0.1/servers response verbatim.
+  - code: invalid_updated_since
+    status: 400
+    title: Invalid updated_since timestamp
+    remediation: Supply an RFC 3339 timestamp, e.g. 2024-01-01T00:00:00Z.
+  - code: invalid_limit
+    status: 400
+    title: Invalid limit
+    remediation: limit must be an integer between 1 and 100. Default is 30.
+  - code: invalid_version
+    status: 400
+    title: Invalid version
+    remediation: Supply a semver string (e.g. 1.0.0) or the literal "latest".
+  - code: unauthorized
+    status: 401
+    title: Missing or invalid API key
+    details_fields: [header]
+    observed: >-
+      {"error":"Invalid or missing API key","code":"unauthorized","details":{"header":"X-API-Key"}}
+      — returned by GET /v0.1/servers and GET /v0.1/health on 2026-08-13.
+    remediation: >-
+      Send a valid X-API-Key header. Keys are issued only by emailing
+      hello@pulsemcp.com; there is no self-service signup.
+  - code: forbidden
+    status: 403
+    title: Access denied
+    remediation: >-
+      The API key is valid but not entitled to the requested resource or tenant.
+      Check X-Tenant-ID, and whether the field you are reading is a Premium
+      enrichment that needs activating on your tenant.
+  - code: not_found
+    status: 404
+    title: Server or version not found
+    remediation: >-
+      Confirm the exact server name (URL-encoded) and that the version exists. Try
+      version "latest", or list versions via
+      GET /v0.1/servers/{serverName}/versions.
+  - code: invalid_path
+    status: 404
+    title: Unrecognised path
+    observed: >-
+      {"error":"Invalid path. Please contact hello@pulsemcp.com if you think this is a mistake.","code":"invalid_path"}
+      — returned by api.pulsemcp.com for /, /openapi.json, /docs, /mcp and every
+      /.well-known/ path on 2026-08-13.
+    remediation: Prefix every request with the version segment, e.g. /v0.1/servers.
+  - code: rate_limit_exceeded
+    status: 429
+    title: Too many requests
+    remediation: >-
+      Back off. Read X-RateLimit-Remaining-Minute/Hour/Day to find which window is
+      exhausted — note that no reset or Retry-After header is documented, so the
+      wait must be inferred from the window name. See
+      rate-limits/pulsemcp-rate-limits.yml.
+  - code: internal_error
+    status: 500
+    title: Internal server error
+    remediation: Retry with backoff; contact hello@pulsemcp.com if it persists.
+
+gaps:
+  - >-
+    Error `code` values for 404 (not_found), 403 (forbidden), 429 and 500 are
+    documented by STATUS in the reference but their exact code strings are not all
+    printed; the four 400 codes and `unauthorized`/`invalid_path` are. The codes
+    listed above for the undocumented cases follow the API's own snake_case
+    convention and should be treated as expected rather than confirmed.
+  - No error-code index page, no per-error documentation anchors.

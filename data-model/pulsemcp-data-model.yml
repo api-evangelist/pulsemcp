@@ -1,0 +1,172 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://www.pulsemcp.com/api/docs/v0.1 — the response data-model section of the
+  PulseMCP Registry API reference, read 2026-08-13. Not derived from an OpenAPI:
+  PulseMCP publishes none.
+description: >-
+  The entity graph the PulseMCP Registry API returns. The design worth noting is the
+  separation of concerns: the `server` object is the upstream Generic Server JSON
+  document exactly as its publisher wrote it, and every PulseMCP-added fact lives in
+  reverse-DNS-namespaced `_meta` blocks beside it. Strip `_meta` and you are left
+  with a document that still validates against the MCP registry schema; keep it and
+  you get PulseMCP's curation layer (popularity estimates, official flags, lifecycle
+  state, and — behind a Premium flag — auth and tool introspection).
+conforms_to:
+  - name: Generic Server JSON specification
+    url: https://github.com/modelcontextprotocol/registry/blob/main/docs/reference/server-json/generic-server-json.md
+    owner: Model Context Protocol project (NOT PulseMCP)
+  - name: Generic MCP Registry API specification
+    url: https://github.com/modelcontextprotocol/registry/blob/main/docs/reference/api/generic-registry-api.md
+    owner: Model Context Protocol project (NOT PulseMCP)
+timestamps: RFC 3339
+
+entities:
+  - name: ServerList
+    description: Response envelope for GET /v0.1/servers.
+    fields:
+      - {name: servers, type: array<ServerResponse>}
+      - {name: metadata, type: ListMetadata}
+
+  - name: ListMetadata
+    description: Pagination envelope.
+    fields:
+      - {name: count, type: integer, description: Number of items in this response.}
+      - {name: nextCursor, type: string, nullable: true, description: Token for the next page; absent on the last page.}
+
+  - name: ServerResponse
+    description: >-
+      Response envelope for a single server version — GET
+      /v0.1/servers/{serverName}/versions/{version}, and each element of
+      ServerList.servers.
+    fields:
+      - {name: server, type: ServerDetail}
+      - {name: _meta, type: PulseMCPEnrichments}
+
+  - name: ServerDetail
+    description: >-
+      The publisher's own MCP server document, unmodified. Field availability varies
+      with the $schema version the publisher used.
+    fields:
+      - {name: $schema, type: string, description: Schema version reference.}
+      - {name: name, type: string, description: Unique identifier, e.g. com.pulsemcp/pulse-fetch.}
+      - {name: title, type: string}
+      - {name: description, type: string}
+      - {name: version, type: string, description: Semantic version.}
+      - {name: websiteUrl, type: string, nullable: true}
+      - {name: repository, type: Repository, nullable: true}
+      - {name: remotes, type: array<Remote>, nullable: true}
+      - {name: packages, type: array<Package>, nullable: true}
+      - {name: _meta, type: object, nullable: true, description: Publisher-provided metadata (distinct from the PulseMCP enrichment _meta on the envelope).}
+
+  - name: Repository
+    fields:
+      - {name: url, type: string}
+      - {name: source, type: string, description: e.g. github}
+      - {name: id, type: string}
+
+  - name: Remote
+    description: A remotely hosted transport for the server (an https MCP endpoint).
+    fields:
+      - {name: isSelfHosted, type: boolean, nullable: true, premium: true}
+      - {name: authOptions, type: array<AuthOption>, nullable: true, premium: true}
+      - {name: tools, type: array<MCPTool>, nullable: true, premium: true}
+
+  - name: Package
+    description: A locally installable distribution of the server (npm, pypi, …).
+    fields:
+      - {name: authOptions, type: array<AuthOption>, nullable: true, premium: true}
+      - {name: tools, type: array<MCPTool>, nullable: true, premium: true}
+
+  - name: PulseMCPEnrichments
+    description: >-
+      The envelope-level _meta block. Two reverse-DNS namespaces, one per level.
+    fields:
+      - {name: 'com.pulsemcp/server', type: ServerEnrichment}
+      - {name: 'com.pulsemcp/server-version', type: ServerVersionEnrichment}
+
+  - name: ServerEnrichment
+    key: 'com.pulsemcp/server'
+    description: Facts about the server as a whole, stable across versions.
+    fields:
+      - {name: visitorsEstimateMostRecentWeek, type: integer, nullable: true}
+      - {name: visitorsEstimateLastFourWeeks, type: integer, nullable: true}
+      - {name: visitorsEstimateTotal, type: integer, nullable: true}
+      - {name: isOfficial, type: boolean, nullable: false}
+
+  - name: ServerVersionEnrichment
+    key: 'com.pulsemcp/server-version'
+    description: Facts about this specific version, including its lifecycle state.
+    fields:
+      - {name: source, type: string, nullable: false}
+      - {name: status, type: string, enum: [active, deprecated, deleted], nullable: false}
+      - {name: publishedAt, type: string, format: rfc3339, nullable: false}
+      - {name: updatedAt, type: string, format: rfc3339, nullable: false}
+      - {name: isLatest, type: boolean, nullable: false}
+      - {name: statusChangedAt, type: string, format: rfc3339, nullable: true}
+      - {name: statusMessage, type: string, nullable: true}
+
+  - name: AuthOption
+    premium: true
+    description: >-
+      How a catalogued server authenticates. The most interesting enrichment
+      PulseMCP sells: it means the registry has actually probed each server's auth
+      surface rather than just listing it.
+    fields:
+      - {name: type, type: string, enum: [oauth, apiKey]}
+      - {name: detail, type: OAuthDetail | ApiKeyDetail}
+
+  - name: OAuthDetail
+    premium: true
+    fields:
+      - {name: protectedResourceMetadata, type: object, description: RFC 9728 document.}
+      - {name: authorizationServerMetadata, type: object, description: RFC 8414 document.}
+      - {name: grantTypes, type: object}
+      - {name: clientRegistration, type: object}
+      - {name: fallback, type: boolean, description: True when RFC 9728 discovery was unavailable and endpoints were probed instead.}
+      - {name: authorization_endpoint, type: string, description: Fallback only.}
+      - {name: token_endpoint, type: string, description: Fallback only.}
+      - {name: registration_endpoint, type: string, description: Fallback only.}
+      - {name: probed_endpoints, type: array, description: Fallback only.}
+
+  - name: ApiKeyDetail
+    premium: true
+    fields:
+      - {name: sources, type: array, description: 'Each entry has location (header|query|env) and name.'}
+
+  - name: MCPTool
+    premium: true
+    description: An MCP Tool object as introspected from the catalogued server.
+
+relationships:
+  - {from: ServerList, to: ServerResponse, type: has_many, via: servers}
+  - {from: ServerList, to: ListMetadata, type: has_one, via: metadata}
+  - {from: ServerResponse, to: ServerDetail, type: has_one, via: server}
+  - {from: ServerResponse, to: PulseMCPEnrichments, type: has_one, via: _meta}
+  - {from: ServerDetail, to: Repository, type: has_one, via: repository}
+  - {from: ServerDetail, to: Remote, type: has_many, via: remotes}
+  - {from: ServerDetail, to: Package, type: has_many, via: packages}
+  - {from: PulseMCPEnrichments, to: ServerEnrichment, type: has_one, via: 'com.pulsemcp/server'}
+  - {from: PulseMCPEnrichments, to: ServerVersionEnrichment, type: has_one, via: 'com.pulsemcp/server-version'}
+  - {from: Remote, to: AuthOption, type: has_many, via: authOptions}
+  - {from: Remote, to: MCPTool, type: has_many, via: tools}
+  - {from: Package, to: AuthOption, type: has_many, via: authOptions}
+  - {from: Package, to: MCPTool, type: has_many, via: tools}
+  - {from: AuthOption, to: OAuthDetail, type: has_one, via: detail}
+  - {from: AuthOption, to: ApiKeyDetail, type: has_one, via: detail}
+
+identity:
+  primary_key: server.name
+  natural_key: (server.name, server.version)
+  id_prefixes: >-
+    None. Server names are reverse-DNS-ish namespaced strings
+    (e.g. com.pulsemcp/pulse-fetch, @anthropic/mcp-server-filesystem) and must be
+    URL-encoded when used as a path segment.
+
+premium_fields:
+  - remotes[].isSelfHosted
+  - remotes[].authOptions
+  - remotes[].tools
+  - packages[].authOptions
+  - packages[].tools
+premium_activation: Per tenant, by contacting hello@pulsemcp.com.

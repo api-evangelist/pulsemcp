@@ -1,0 +1,95 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://www.pulsemcp.com/api/docs/v0.1, https://www.pulsemcp.com/api,
+  https://www.pulsemcp.com/terms-of-service, and
+  https://github.com/pulsemcp/air/blob/main/CHANGELOG.md — all read 2026-08-13.
+description: >-
+  Version and change management for the PulseMCP Registry API. The headline finding
+  is a gap: PulseMCP ships a versioned API path and models lifecycle state for the
+  servers it CATALOGUES in fine detail, but publishes no versioning policy, no
+  deprecation policy, no sunset commitment, no SLA and no status page for its OWN
+  API. Its terms of service explicitly disclaim any warranty of reliability.
+
+versioning:
+  scheme: path prefix
+  current: v0.1
+  format: major.minor in the URL path
+  stability_signal: >-
+    A v0.x number on a public, key-gated, partner-facing API is itself the clearest
+    stability statement PulseMCP makes — it signals pre-1.0.
+  header_pinning: none
+  policy_published: false
+  build_endpoint:
+    path: GET /v0.1/version
+    returns: API version, git commit, build timestamp
+
+deprecation:
+  policy_published: false
+  sunset_header: not implemented
+  deprecation_header: not implemented
+  rfc8594: false
+  notice_period: not published
+  note: >-
+    PulseMCP publishes no deprecation policy for the Registry API. Do not confuse
+    this with the lifecycle fields it EXPOSES about third-party servers in the
+    registry (see catalogued_server_lifecycle below) — those describe other
+    people's software, not PulseMCP's commitment to its own consumers.
+
+catalogued_server_lifecycle:
+  note: >-
+    The data model PulseMCP publishes ABOUT the servers it lists is genuinely
+    lifecycle-aware, and is worth recording because it is the product.
+  fields:
+    - name: _meta["com.pulsemcp/server-version"].status
+      values: [active, deprecated, deleted]
+    - name: _meta["com.pulsemcp/server-version"].statusChangedAt
+      type: RFC 3339 timestamp, nullable
+    - name: _meta["com.pulsemcp/server-version"].statusMessage
+      type: string, nullable
+    - name: _meta["com.pulsemcp/server-version"].isLatest
+      type: boolean
+    - name: _meta["com.pulsemcp/server-version"].publishedAt
+      type: RFC 3339 timestamp
+    - name: _meta["com.pulsemcp/server-version"].updatedAt
+      type: RFC 3339 timestamp
+  default_filtering: >-
+    Deleted servers are excluded from /v0.1/servers by default; supplying
+    updated_since re-includes every status so an ETL consumer can learn about
+    deletions.
+
+sla:
+  published: false
+  uptime_commitment: none
+  terms_clause: >-
+    "We make no warranties or representations about the accuracy, reliability,
+    completeness, or timeliness of the content, information, software, text,
+    graphics, links, or other items contained on the Website."
+    (https://www.pulsemcp.com/terms-of-service, Last Updated: March 4, 2025)
+
+status_page:
+  published: false
+  url: null
+  note: >-
+    No status.pulsemcp.com, no Statuspage/Instatus/BetterStack page is linked from
+    the site, the docs, the GitHub org or llms.txt. The closest published surface is
+    https://www.pulsemcp.com/stats, which reports MCP ECOSYSTEM statistics (server
+    and client counts) — it is not an availability page and must not be treated as
+    one. GET /v0.1/health and GET /v0.1/ping exist but both require an API key, so
+    there is no unauthenticated liveness signal.
+
+changelog:
+  api_changelog_published: false
+  open_source_changelogs_published: true
+  detail: changelog/pulsemcp-changelog.yml
+
+legal:
+  terms_of_service: https://www.pulsemcp.com/terms-of-service
+  terms_last_updated: '2025-03-04'
+  privacy_policy: https://www.pulsemcp.com/privacy-policy
+  privacy_effective: '2025-03-04'
+  editorial_disclosure: https://www.pulsemcp.com/editorial-disclosure
+  automated_access_clause: >-
+    Prohibits "any automated means, including bots, scrapers, or spiders, to access
+    or collect data from the Website (besides via the provided REST API) without our
+    prior written consent."

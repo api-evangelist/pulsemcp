@@ -1,0 +1,132 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://www.pulsemcp.com/api/docs/v0.1 — the cross-cutting request/response
+  behaviour that applies to every PulseMCP Registry API endpoint, plus the
+  first-party client at
+  https://github.com/pulsemcp/mcp-servers/blob/main/productionized/pulse-subregistry/shared/src/client.ts
+description: >-
+  How the PulseMCP Registry API behaves across every operation: authentication
+  style, versioning, pagination, error envelope, rate-limit signalling, and what it
+  does NOT do. It is a small, read-only, well-mannered API — five documented
+  operations, all GET — so several conventions that matter for write APIs
+  (idempotency, request tracing, sparse fieldsets) are simply not present, and that
+  absence is recorded here rather than glossed over.
+
+base_url: https://api.pulsemcp.com
+api_style: REST over HTTPS, JSON responses, read-only (every documented operation is a GET)
+docs: https://www.pulsemcp.com/api/docs/v0.1
+
+authentication:
+  scheme: API key in a custom header
+  headers:
+    - X-API-Key
+    - X-Tenant-ID
+  self_service: false
+  detail: authentication/pulsemcp-authentication.yml
+
+versioning:
+  style: path prefix
+  current: v0.1
+  example: https://api.pulsemcp.com/v0.1/servers
+  header_pinning: none
+  build_introspection: >-
+    GET /v0.1/version returns the API version, git commit and build timestamp — a
+    genuinely useful convention most providers skip, though no MCP tool exposes it.
+  detail: lifecycle/pulsemcp-lifecycle.yml
+
+idempotency:
+  supported: false
+  mechanism: null
+  note: >-
+    No Idempotency-Key header is documented and none is needed at v0.1: the API is
+    read-only, so every documented operation is inherently idempotent. Recorded as
+    unsupported rather than N/A because a future write surface would need it.
+
+pagination:
+  style: cursor
+  request_params:
+    limit: integer, 1-100, default 30
+    cursor: opaque token taken from the previous response's metadata.nextCursor
+  response_fields:
+    servers: array of ServerResponse objects
+    metadata.count: integer — number of items in this response
+    metadata.nextCursor: string — token for the next page; ABSENT when the last page has been reached
+  termination: absence of metadata.nextCursor
+  auto_pagination: >-
+    Not provided. The first-party MCP server exposes the raw cursor to the model, so
+    an agent must loop on nextCursor itself.
+
+filtering:
+  search: substring match against server names and titles
+  updated_since: >-
+    RFC 3339 timestamp. Documented ETL behaviour worth noting — when updated_since
+    is supplied, results may include servers with ANY lifecycle status, INCLUDING
+    deleted ones, so that a downstream sync can learn about deletions. Without it,
+    deleted servers are excluded.
+  version: exact semver, or the literal "latest"
+
+field_expansion:
+  supported: false
+  note: >-
+    No sparse-fieldset or expand parameter exists on the wire. The MCP server layers
+    its own `expand_fields` parameter on top, but that is CLIENT-side: by default it
+    truncates any string over 200 characters before handing the payload to the
+    model, and expand_fields un-truncates named dot-paths. An HTTP client gets the
+    full payload either way.
+
+metadata_extension:
+  mechanism: _meta namespacing
+  namespaces:
+    - key: com.pulsemcp/server
+      level: server
+      fields: [visitorsEstimateMostRecentWeek, visitorsEstimateLastFourWeeks, visitorsEstimateTotal, isOfficial]
+    - key: com.pulsemcp/server-version
+      level: version
+      fields: [source, status, publishedAt, updatedAt, isLatest, statusChangedAt, statusMessage]
+  note: >-
+    PulseMCP's enrichments are carried in reverse-DNS-namespaced _meta blocks rather
+    than mixed into the standard server object — so a consumer can strip _meta and
+    be left with a document that still validates against the upstream Generic Server
+    JSON schema. This is the cleanest extension convention in the profile.
+  detail: data-model/pulsemcp-data-model.yml
+
+request_tracing:
+  supported: false
+  note: No request-id or correlation-id response header is documented.
+
+error_envelope:
+  format: custom JSON
+  rfc9457: false
+  shape: |
+    {
+      "error": "Human-readable message",
+      "code": "machine_readable_code",
+      "details": {}
+    }
+  content_type: application/json
+  observed_live: >-
+    Confirmed on 2026-08-13 — https://api.pulsemcp.com/v0.1/servers returned
+    {"error":"Invalid or missing API key","code":"unauthorized","details":{"header":"X-API-Key"}}
+    and unknown paths returned
+    {"error":"Invalid path. Please contact hello@pulsemcp.com if you think this is a mistake.","code":"invalid_path"}
+  detail: errors/pulsemcp-problem-types.yml
+
+rate_limit_signaling:
+  headers: [X-RateLimit-Limit-Minute, X-RateLimit-Limit-Hour, X-RateLimit-Limit-Day, X-RateLimit-Remaining-Minute, X-RateLimit-Remaining-Hour, X-RateLimit-Remaining-Day]
+  reset_header: none
+  status_on_exhaustion: 429
+  detail: rate-limits/pulsemcp-rate-limits.yml
+
+timestamps:
+  format: RFC 3339
+  fields: [publishedAt, updatedAt, statusChangedAt, updated_since]
+
+edge_behaviour:
+  note: >-
+    A convention of the WEBSITE rather than the API, but it shapes every machine
+    interaction with PulseMCP: www.pulsemcp.com is behind Cloudflare bot management
+    and answers HTTP 403 to plain HTTP clients on every path except /robots.txt.
+    api.pulsemcp.com is NOT behind that wall — it answers cleanly with JSON to any
+    client and gates on the API key instead. Machines are expected to use the API
+    host; the docs host is for browsers.
