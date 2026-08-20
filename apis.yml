@@ -32,6 +32,16 @@ access: 3rd-Party
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/pulsemcp.png
 tags:
   - MCP
+  - AI Agents
+  - Agentic Engineering
+  - Directory
+  - Registry
+  - Community
+  - Developer Tools
+  - LLM Tooling
+  - Newsletter
+tags_raw:
+  - MCP
   - Model Context Protocol
   - AI Agents
   - Agentic Engineering
