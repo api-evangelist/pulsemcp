@@ -1,0 +1,139 @@
+edges:
+- partner_name: npm registry
+  partner: npm
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: official SDK (JavaScript/TypeScript)
+  evidence: https://www.npmjs.com/package/@pulsemcp/air-adapter-claude
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: npm registry (public registry JSON)
+    spec_file: null
+    language: JavaScript/TypeScript
+    packages:
+    - name: '@pulsemcp/air-adapter-claude'
+      version: 0.13.1
+      released: '2026-06-22'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@pulsemcp/air-adapter-claude
+      repo_leg: github-org:pulsemcp
+      publisher_leg: email:pulsemcp.com
+      matched_by: domain
+    - name: '@pulsemcp/air-adapter-codex'
+      version: 0.13.1
+      released: '2026-06-22'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@pulsemcp/air-adapter-codex
+      repo_leg: github-org:pulsemcp
+      publisher_leg: email:pulsemcp.com
+      matched_by: domain
+    - name: '@pulsemcp/air-adapter-cursor'
+      version: 0.13.1
+      released: '2026-06-22'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@pulsemcp/air-adapter-cursor
+      repo_leg: github-org:pulsemcp
+      publisher_leg: email:pulsemcp.com
+      matched_by: domain
+    - name: '@pulsemcp/air-adapter-pi'
+      version: 0.13.1
+      released: '2026-06-22'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@pulsemcp/air-adapter-pi
+      repo_leg: github-org:pulsemcp
+      publisher_leg: email:pulsemcp.com
+      matched_by: domain
+    - name: '@pulsemcp/air-cli'
+      version: 0.13.1
+      released: '2026-06-22'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@pulsemcp/air-cli
+      repo_leg: github-org:pulsemcp
+      publisher_leg: email:pulsemcp.com
+      matched_by: domain
+    - name: '@pulsemcp/air-core'
+      version: 0.13.1
+      released: '2026-06-22'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@pulsemcp/air-core
+      repo_leg: github-org:pulsemcp
+      publisher_leg: email:pulsemcp.com
+      matched_by: domain
+    - name: '@pulsemcp/air-cowork'
+      version: 0.13.1
+      released: '2026-06-22'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@pulsemcp/air-cowork
+      repo_leg: github-org:pulsemcp
+      publisher_leg: email:pulsemcp.com
+      matched_by: domain
+    - name: '@pulsemcp/air-provider-github'
+      version: 0.13.1
+      released: '2026-06-22'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@pulsemcp/air-provider-github
+      repo_leg: github-org:pulsemcp
+      publisher_leg: email:pulsemcp.com
+      matched_by: domain
+    - name: '@pulsemcp/air-sdk'
+      version: 0.13.1
+      released: '2026-06-22'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@pulsemcp/air-sdk
+      repo_leg: github-org:pulsemcp
+      publisher_leg: email:pulsemcp.com
+      matched_by: domain
+    - name: '@pulsemcp/air-secrets-env'
+      version: 0.13.1
+      released: '2026-06-22'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@pulsemcp/air-secrets-env
+      repo_leg: github-org:pulsemcp
+      publisher_leg: email:pulsemcp.com
+      matched_by: domain
+    - name: '@pulsemcp/air-secrets-file'
+      version: 0.13.1
+      released: '2026-06-22'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@pulsemcp/air-secrets-file
+      repo_leg: github-org:pulsemcp
+      publisher_leg: email:pulsemcp.com
+      matched_by: domain
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  detected_by: sweep-official-sdks.py
+  first_seen: '2026-10-18'
+generated: '2026-10-18'
+method: searched
+source:
+- https://api.nuget.org/v3
+- https://crates.io/api/v1
+- https://proxy.golang.org
+- https://pypi.org/pypi
+- https://registry.npmjs.org
+- https://repo1.maven.org/maven2
+- https://rubygems.org/api/v1
+checked:
+- https://api.nuget.org/v3
+- https://crates.io/api/v1
+- https://proxy.golang.org
+- https://pypi.org/pypi
+- https://registry.npmjs.org
+- https://repo1.maven.org/maven2
+- https://rubygems.org/api/v1
