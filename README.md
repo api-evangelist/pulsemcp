@@ -1,4 +1,4 @@
-# pulsemcp
+# PulseMCP
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,4 +64,108 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-PulseMCP — community directory and registry for Model Context Protocol (MCP) servers and clients, with a public Registry API, newsletter, and Discord.
+PulseMCP is a community platform and directory dedicated to the Model Context Protocol (MCP) — the open protocol for connecting AI assistants and agents to external tools, data, and systems. Founded by Tadas Antanavicius (MCP Steering Committee) and Mike Coughlin in early 2025, PulseMCP curates searchable directories of MCP servers and clients, publishes use cases, runs the "Agentic Loop" newsletter, and operates a Discord community for builders. It also exposes a public PulseMCP Registry API (api.pulsemcp.com, v0.1) implementing the Generic MCP Registry API specification with PulseMCP-specific enriched metadata such as popularity, security analyses, and compatibility data. The PulseMCP GitHub organization additionally maintains MCP servers, the AIR collaboration framework, and shared agentic-engineering templates and artifacts. Access to the API requires contacting PulseMCP for a key and tenant ID; the directory and content are free to browse.
+
+**Areas:** MCP · AI Agents · Agentic Engineering · Directory · Registry · Community · Developer Tools · LLM Tooling · Newsletters
+
+## PulseMCP on APIs.io
+
+Everything profiled for PulseMCP is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/pulsemcp/](https://apis.io/providers/pulsemcp/)** — or go straight to one of the APIs or properties below.
+
+### APIs (1)
+
+- [PulseMCP Registry API](https://apis.io/apis/pulsemcp/registry/) — Public v0.1 API for browsing MCP servers, server versions, and ecosystem metadata in the PulseMCP Registry. Implements the Generic MCP Registry API…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [pulsemcp-mcp.yml](https://apis.io/servers/pulsemcp/pulsemcp-mcp-yml/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Pulsemcp Authentication](https://apis.io/security/pulsemcp/pulsemcp-authentication/)
+- [Pulsemcp Domain Security](https://apis.io/security/pulsemcp/pulsemcp-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Pulsemcp Plans Pricing](https://apis.io/plans/pulsemcp/pulsemcp-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Pulsemcp Rate Limits](https://apis.io/rate-limits/pulsemcp/pulsemcp-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.pulsemcp.com)
+- [Documentation](https://www.pulsemcp.com/api/docs/v0.1)
+- [Support](https://discord.gg/dP2evEyTjS)
+- [Blog](https://www.pulsemcp.com/posts)
+- [Terms of service](https://www.pulsemcp.com/terms-of-service)
+- [Privacy policy](https://www.pulsemcp.com/privacy-policy)
+- [GitHub](https://github.com/pulsemcp)
+
+## API Evangelist rating
+
+**Kin Score 35.8** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 71.7 |
+| Contract quality | 0.0 |
+| Contract governance | 4.5 |
+| Operational transparency | 50.0 |
+| Developer ergonomics | 66.7 |
+| Access clarity | 34.2 |
+
+**Agent readiness 15.0** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | documented (partial credit) |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | yes |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 24.5** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/pulsemcp/](https://apis.io/providers/pulsemcp/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for PulseMCP: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/pulsemcp/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
